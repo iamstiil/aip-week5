@@ -13,8 +13,12 @@ class App extends Component {
         </div>
         <div className="row content-wrapper">
           <div className="col-12">
+            <div className="view-menu float-right">
+              <button className="btn btn-outline-primary oi oi-magnifying-glass"></button>
+              <button className="btn btn-outline-primary oi oi-list"></button>
+              <button className="btn btn-outline-primary oi oi-grid-two-up"></button>
+            </div>
             <h1>Dashboard</h1>
-            <span className="oi oi-magnifying-glass"></span>
           </div>
         </div>
       </div>

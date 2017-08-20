@@ -1,3 +1,11 @@
 .content-wrapper {
   margin-top: 60px;
 }
+
+.view-menu {
+  margin-top: 0.5rem;
+  
+  button + button {
+    margin-left: 0.5rem;
+  }
+}
