@@ -18,7 +18,72 @@ class App extends Component {
               <button className="btn btn-outline-primary oi oi-list"></button>
               <button className="btn btn-outline-primary oi oi-grid-two-up"></button>
             </div>
-            <h1>Dashboard</h1>
+            <h2>Dashboard</h2>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+            <h3>User 1</h3>
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Task 1</h4>
+                <p className="card-text">Simple task description</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Task 2</h4>
+                <p className="card-text">Simple task description</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Task 3</h4>
+                <p className="card-text">Simple task description</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+            <h3>User 2</h3>
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Task 1</h4>
+                <p className="card-text">Simple task description</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Task 2</h4>
+                <p className="card-text">Simple task description</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Task 3</h4>
+                <p className="card-text">Simple task description</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Task 4</h4>
+                <p className="card-text">Simple task description</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+            <h3>User 3</h3>
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Task 1</h4>
+                <p className="card-text">Simple task description</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Task 2</h4>
+                <p className="card-text">Simple task description</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
