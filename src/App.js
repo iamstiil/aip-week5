@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Card from './components/Card';
 import 'bootstrap';
 import './App.scss';
 
@@ -24,68 +25,23 @@ class App extends Component {
         <div className="row">
           <div className="col-12 col-sm-6 col-md-4 col-lg-3">
             <h3>User 1</h3>
-            <div className="card mb-3">
-              <div className="card-body">
-                <h4 className="card-title">Task 1</h4>
-                <p className="card-text">Simple task description</p>
-              </div>
-            </div>
-            <div className="card mb-3">
-              <div className="card-body">
-                <h4 className="card-title">Task 2</h4>
-                <p className="card-text">Simple task description</p>
-              </div>
-            </div>
-            <div className="card mb-3">
-              <div className="card-body">
-                <h4 className="card-title">Task 3</h4>
-                <p className="card-text">Simple task description</p>
-              </div>
-            </div>
+            <Card title="Task 1">Simple task description</Card>
+            <Card title="Task 2">Simple task description</Card>
+            <Card title="Task 3">Simple task description</Card>
             <button className="btn btn-primary btn-block">Create Task</button>
           </div>
           <div className="col-12 col-sm-6 col-md-4 col-lg-3">
             <h3>User 2</h3>
-            <div className="card mb-3">
-              <div className="card-body">
-                <h4 className="card-title">Task 1</h4>
-                <p className="card-text">Simple task description</p>
-              </div>
-            </div>
-            <div className="card mb-3">
-              <div className="card-body">
-                <h4 className="card-title">Task 2</h4>
-                <p className="card-text">Simple task description</p>
-              </div>
-            </div>
-            <div className="card mb-3">
-              <div className="card-body">
-                <h4 className="card-title">Task 3</h4>
-                <p className="card-text">Simple task description</p>
-              </div>
-            </div>
-            <div className="card mb-3">
-              <div className="card-body">
-                <h4 className="card-title">Task 4</h4>
-                <p className="card-text">Simple task description</p>
-              </div>
-            </div>
+            <Card title="Task 1">Simple task description</Card>
+            <Card title="Task 2">Simple task description</Card>
+            <Card title="Task 3">Simple task description</Card>
+            <Card title="Task 4">Simple task description</Card>
             <button className="btn btn-primary btn-block">Create Task</button>
           </div>
           <div className="col-12 col-sm-6 col-md-4 col-lg-3">
             <h3>User 3</h3>
-            <div className="card mb-3">
-              <div className="card-body">
-                <h4 className="card-title">Task 1</h4>
-                <p className="card-text">Simple task description</p>
-              </div>
-            </div>
-            <div className="card mb-3">
-              <div className="card-body">
-                <h4 className="card-title">Task 2</h4>
-                <p className="card-text">Simple task description</p>
-              </div>
-            </div>
+            <Card title="Task 1">Simple task description</Card>
+            <Card title="Task 2">Simple task description</Card>
             <button className="btn btn-primary btn-block">Create Task</button>
           </div>
         </div>
