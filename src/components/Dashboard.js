@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Card from './Card';
+import './Dashboard.scss';
 
 class Dashboard extends Component {
   
@@ -13,6 +14,7 @@ class Dashboard extends Component {
           {user.tasks.map((task) => {
             return <Link key={task.id} to={`/user/${user.id}/task/${task.id}`}><Card title={task.title}>{task.description}</Card></Link>
           })}
+          <Link to={`/user/${user.id}/task/create`}><button className="btn btn-primary btn-block btn-create">Create Task</button></Link>
         </div>
       );
     });
