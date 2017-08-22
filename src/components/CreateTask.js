@@ -43,7 +43,7 @@ class CreateTask extends Component {
             </select>
           </div>
           <button className="btn btn-primary btn-submit">Create</button>
-          <button className="btn btn-secondary btn-cancel">Cancel</button>
+          <button className="btn btn-secondary btn-cancel" onClick={() => this.props.history.goBack()}>Cancel</button>
         </div>
       </div>
     );
