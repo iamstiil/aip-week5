@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { createTask } from '../actions';
 import './CreateTask.scss';
 
 class CreateTask extends Component {
+  constructor(props) {
+    super(props);
+    
+    let user = this._getUser();
+    
+    this.state = {
+      task: {
+        title: '',
+        description: '',
+        user: user.id
+      }
+    };
+  }
+  
   _getUser() {
     let userArray = this.props.users.filter((user) => {
       if(this.props.match.params.userid == user.id){
@@ -17,6 +32,24 @@ class CreateTask extends Component {
     return user;
   }
   
+  _handleTitleChange(event){
+    this.setState({
+      task: {
+        ... this.state.task,
+        title: event.target.value
+      }
+    });
+  }
+  
+  _handleDescriptionChange(event){
+    this.setState({
+      task: {
+        ... this.state.task,
+        description: event.target.value
+      }
+    });
+  }
+  
   render() {
     let user = this._getUser();
     return(
@@ -29,20 +62,47 @@ class CreateTask extends Component {
         </div>
         <div className="col-12">
           <div className="form-group">
-            <label for="task-title">Title</label>
-            <input type="text" className="form-control" name="task-title" placeholder="Enter description for the task" />
+            <label htmlFor="task-title">Title</label>
+            <input
+              type="text"
+              className="form-control"
+              name="task-title"
+              placeholder="Enter description for the task"
+              onChange={this._handleTitleChange.bind(this)}
+              value={this.state.task.title}
+            />
           </div>
           <div className="form-group">
-            <label for="task-description">Description</label>
-            <textarea type="text" className="form-control" name="task-description" placeholder="Enter description for the task" rows="8"/>
+            <label htmlFor="task-description">Description</label>
+            <textarea
+              type="text"
+              className="form-control"
+              name="task-description"
+              placeholder="Enter description for the task"
+              rows="8"
+              onChange={this._handleDescriptionChange.bind(this)}
+              value={this.state.task.description}
+            />
           </div>
           <div className="form-group">
-            <label for="task-user">User</label>
-            <select className="form-control" name="task-user" rows="8" disabled>
-              <option>{user.name}</option>
+            <label htmlFor="task-user">User</label>
+            <select
+              className="form-control"
+              name="task-user"
+              rows="8"
+              value={this.state.task.user}
+              disabled
+            >
+              <option value={user.id}>{user.name}</option>
             </select>
           </div>
-          <button className="btn btn-primary btn-submit">Create</button>
+          <button
+            className="btn btn-primary btn-submit"
+            onClick={() => {
+              this.props.onCreateTask(this.state.task);
+              this.props.history.goBack();
+            }}
+          >Create</button>
           <button className="btn btn-secondary btn-cancel" onClick={() => this.props.history.goBack()}>Cancel</button>
         </div>
       </div>
@@ -54,6 +114,13 @@ CreateTask = connect(
   (state) => {
     return {
       users: state.users
+    };
+  },
+  (dispatch) => {
+    return {
+      onCreateTask: (task) => {
+        dispatch(createTask(task));
+      }
     };
   }
 )(CreateTask);

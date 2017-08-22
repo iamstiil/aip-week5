@@ -1,3 +1,4 @@
+import { CREATE_TASK } from '../actions';
 const initialState = [
   {
     id: 1,
@@ -25,22 +26,22 @@ const initialState = [
     name: 'User 2',
     tasks: [
       {
-        id: 4,
+        id: 1,
         title: 'Task 1',
         description: 'Simple task description'
       },
       {
-        id: 5,
+        id: 2,
         title: 'Task 2',
         description: 'Simple task description'
       },
       {
-        id: 6,
+        id: 3,
         title: 'Task 3',
         description: 'Simple task description'
       },
       {
-        id: 7,
+        id: 4,
         title: 'Task 4',
         description: 'Simple task description'
       },
@@ -51,12 +52,12 @@ const initialState = [
     name: 'User 3',
     tasks: [
       {
-        id: 8,
+        id: 1,
         title: 'Task 1',
         description: 'Simple task description'
       },
       {
-        id: 9,
+        id: 2,
         title: 'Task 2',
         description: 'Simple task description'
       },
@@ -65,7 +66,26 @@ const initialState = [
 ];
 
 function users(state = initialState, action) {
-  return state;
+  switch(action.type){
+    case CREATE_TASK:
+      let res = state.map((user) => {
+        if(user.id == action.task.user){
+          let id = Math.max.apply(null, user.tasks.map((task) => {
+            return task.id;
+          })) || -1;
+          
+          user.tasks.push({
+            id: id + 1,
+            title: action.task.title,
+            description: action.task.description
+          });
+        }
+        return user;
+      });
+      return res;
+    default:
+      return state;
+  }
 }
 
 export default users;
