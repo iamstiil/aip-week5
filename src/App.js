@@ -6,6 +6,9 @@ import CreateTask from './components/CreateTask';
 import 'bootstrap';
 import './App.scss';
 
+/**
+ * Component class for routing
+ */
 class App extends Component {
   
   render() {
