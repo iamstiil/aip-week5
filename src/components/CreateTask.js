@@ -3,7 +3,13 @@ import { connect } from 'react-redux';
 import { createTask } from '../actions';
 import './CreateTask.scss';
 
+/**
+ * Component class displaying task creation form
+ */
 class CreateTask extends Component {
+  /**
+   * Constructor 
+   */
   constructor(props) {
     super(props);
     
@@ -18,6 +24,9 @@ class CreateTask extends Component {
     };
   }
   
+  /**
+   * Get user for current path
+   */
   _getUser() {
     let userArray = this.props.users.filter((user) => {
       if(this.props.match.params.userid == user.id){
@@ -32,6 +41,9 @@ class CreateTask extends Component {
     return user;
   }
   
+  /**
+   * Handle title change in form
+   */
   _handleTitleChange(event){
     this.setState({
       task: {
@@ -41,6 +53,9 @@ class CreateTask extends Component {
     });
   }
   
+  /**
+   * Handle description change in form
+   */
   _handleDescriptionChange(event){
     this.setState({
       task: {
@@ -110,6 +125,9 @@ class CreateTask extends Component {
   }
 }
 
+/**
+ * Connect Redux with Component
+ */
 CreateTask = connect(
   (state) => {
     return {
