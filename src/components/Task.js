@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+/**
+ * Component class displaying a single task
+ */
 class Task extends Component {
+  /**
+   * Get user for current path
+   */
   _getUser() {
     let userArray = this.props.users.filter((user) => {
       if(this.props.match.params.userid == user.id){
@@ -16,6 +22,9 @@ class Task extends Component {
     return user;
   }
   
+  /**
+   * Get task for current path using the passed user
+   */
   _getTask(user) {
     let taskArray = user.tasks.filter((task) => {
       if(this.props.match.params.taskid == task.id){
@@ -47,6 +56,9 @@ class Task extends Component {
   }
 }
 
+/**
+ * Connect Redux with Component
+ */
 Task = connect(
   (state) => {
     return {
