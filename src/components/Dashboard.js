@@ -4,17 +4,29 @@ import { connect } from 'react-redux';
 import Card from './Card';
 import './Dashboard.scss';
 
+/**
+ * Component class for Dashboard
+ */
 class Dashboard extends Component {
-  
+
+  /**
+   * get all lists of users with tasks
+   */
   _getUserLists() {
     return this.props.users.map((user) => {
       return (
         <div key={user.id} className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
           <h3>{user.name}</h3>
           {user.tasks.map((task) => {
-            return <Link key={task.id} to={`/user/${user.id}/task/${task.id}`}><Card title={task.title}>{task.description}</Card></Link>
+            return (
+              <Link key={task.id} to={`/user/${user.id}/task/${task.id}`}>
+                <Card title={task.title}>{task.description}</Card>
+              </Link>
+            );
           })}
-          <Link to={`/user/${user.id}/task/create`}><button className="btn btn-primary btn-block btn-create">Create Task</button></Link>
+          <Link to={`/user/${user.id}/task/create`}>
+            <button className="btn btn-primary btn-block btn-create">Create Task</button>
+          </Link>
         </div>
       );
     });
@@ -41,6 +53,9 @@ class Dashboard extends Component {
   }
 }
 
+/**
+ * Connect Redux with Component
+ */
 Dashboard = connect(
   (state) => {
     return {

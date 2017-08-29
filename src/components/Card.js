@@ -1,8 +1,12 @@
+
 import React, { Component } from 'react';
 import './Card.scss';
 
+/**
+ * Component Class for Cards
+ */
 class Card extends Component {
-  render(){
+  render() {
     return (
       <div className="card mb-3" onClick={this.props.onClick}>
         <div className="card-body">
