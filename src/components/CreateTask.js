@@ -13,13 +13,11 @@ class CreateTask extends Component {
   constructor(props) {
     super(props);
     
-    let user = this._getUser();
-    
     this.state = {
       task: {
         title: '',
         description: '',
-        user: user.id
+        user: (props.users.length > 0) ? props.users[0].id : -1,
       }
     };
   }
@@ -29,7 +27,7 @@ class CreateTask extends Component {
    */
   _getUser() {
     let userArray = this.props.users.filter((user) => {
-      if(this.props.match.params.userid == user.id){
+      if(parseInt(this.props.match.params.userid, 10) === user.id){
         return true;
       }
       return false;
@@ -47,8 +45,8 @@ class CreateTask extends Component {
   _handleTitleChange(event){
     this.setState({
       task: {
-        ... this.state.task,
-        title: event.target.value
+        ...this.state.task,
+        title: event.target.value,
       }
     });
   }
@@ -59,21 +57,32 @@ class CreateTask extends Component {
   _handleDescriptionChange(event){
     this.setState({
       task: {
-        ... this.state.task,
-        description: event.target.value
+        ...this.state.task,
+        description: event.target.value,
+      }
+    });
+  }
+  
+  /**
+   * Handle user change in form
+   */
+  _handleUserChange(event){
+    this.setState({
+      task: {
+        ...this.state.task,
+        user: parseInt(event.target.value, 10),
       }
     });
   }
   
   render() {
-    let user = this._getUser();
     return(
       <div className="row content-wrapper">
         <div className="col-12">
           <div className="view-menu float-right">
             <button className="btn btn-outline-primary oi oi-pencil"></button>
           </div>
-          <h2>Create task for {user.name}</h2>
+          <h2>Create task</h2>
         </div>
         <div className="col-12">
           <div className="form-group">
@@ -105,10 +114,12 @@ class CreateTask extends Component {
               className="form-control"
               name="task-user"
               rows="8"
+              onChange={this._handleUserChange.bind(this)}
               value={this.state.task.user}
-              disabled
             >
-              <option value={user.id}>{user.name}</option>
+              {this.props.users.map(user => {
+                return <option key={user.id} value={user.id}>{user.name}</option>
+              })}
             </select>
           </div>
           <button
@@ -131,7 +142,7 @@ class CreateTask extends Component {
 CreateTask = connect(
   (state) => {
     return {
-      users: state.users
+      users: state.users,
     };
   },
   (dispatch) => {

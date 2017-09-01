@@ -8,9 +8,9 @@ class Task extends Component {
   /**
    * Get user for current path
    */
-  _getUser() {
+  _getUser(userid) {
     let userArray = this.props.users.filter((user) => {
-      if(this.props.match.params.userid == user.id){
+      if(userid === user.id){
         return true;
       }
       return false;
@@ -25,13 +25,14 @@ class Task extends Component {
   /**
    * Get task for current path using the passed user
    */
-  _getTask(user) {
-    let taskArray = user.tasks.filter((task) => {
-      if(this.props.match.params.taskid == task.id){
+  _getTask() {
+    let taskArray = this.props.tasks.filter((task) => {
+      if(parseInt(this.props.match.params.taskid, 10) === task.id){
         return true;
       }
       return false;
     });
+    
     
     let task = null;
     if(taskArray.length === 1)
@@ -40,8 +41,11 @@ class Task extends Component {
   }
   
   render() {
-    let user = this._getUser();
-    let task = this._getTask(user);
+    let task = this._getTask();
+    if(task === null)
+      return false;
+    let user = this._getUser(task.userid);
+    
     return (
       <div className="row content-wrapper">
         <div className="col-12">
@@ -62,7 +66,8 @@ class Task extends Component {
 Task = connect(
   (state) => {
     return {
-      users: state.users
+      users: state.users,
+      tasks: state.tasks,
     }
   }
 )(Task);

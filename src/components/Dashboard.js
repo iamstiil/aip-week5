@@ -17,14 +17,16 @@ class Dashboard extends Component {
       return (
         <div key={user.id} className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
           <h3>{user.name}</h3>
-          {user.tasks.map((task) => {
+          {this.props.tasks.map((task) => {
+            if(user.id !== task.userid)
+              return false;
             return (
-              <Link key={task.id} to={`/user/${user.id}/task/${task.id}`}>
+              <Link key={task.id} to={`/task/${task.id}`}>
                 <Card title={task.title}>{task.description}</Card>
               </Link>
             );
           })}
-          <Link to={`/user/${user.id}/task/create`}>
+          <Link to={`/task/create`}>
             <button className="btn btn-primary btn-block btn-create">Create Task</button>
           </Link>
         </div>
@@ -59,7 +61,8 @@ class Dashboard extends Component {
 Dashboard = connect(
   (state) => {
     return {
-      users: state.users
+      users: state.users,
+      tasks: state.tasks,
     };
   },
 )(Dashboard)

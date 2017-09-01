@@ -21,8 +21,8 @@ class App extends Component {
             </nav>
           </div>
           <Route exact={true} path={`/`} component={Dashboard}/>
-          <Route exact={true} path={`/user/:userid/task/create`} component={CreateTask} />
-          <Route exact={true} path={`/user/:userid/task/:taskid(\\d+)`} component={Task} />
+          <Route exact={true} path={`/task/create`} component={CreateTask} />
+          <Route exact={true} path={`/task/:taskid(\\d+)`} component={Task} />
         </div>
       </Router>
     );
