@@ -1,7 +1,7 @@
 /**
  * Actiontypes
  */
-export const CREATE_TASK = 'CREATE_TASK';
+import * from './actionTypes';
 
 /**
  * Action Creators

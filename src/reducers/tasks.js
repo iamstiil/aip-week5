@@ -1,4 +1,4 @@
-import { CREATE_TASK } from '../actions';
+import { CREATE_TASK } from '../actions/actionTypes';
 
 const initialState = [
   {
