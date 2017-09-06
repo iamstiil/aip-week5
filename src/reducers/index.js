@@ -4,7 +4,7 @@ import tasks from './tasks';
 
 const combinedReducers = combineReducers({
   users,
-  tasks
+  tasks,
 });
 
 export default combinedReducers;
