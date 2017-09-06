@@ -1,20 +1,18 @@
-const initialState = [
-  {
-    id: 1,
-    name: 'User 1',
-  },
-  {
-    id: 2,
-    name: 'User 2',
-  },
-  {
-    id: 3,
-    name: 'User 3',
-  },
-];
+import { INITIALIZED } from '../actions/actionTypes';
 
-function users(state = initialState, action) {
+function users(state = [], action) {
   switch (action.type) {
+    case INITIALIZED: {
+      const res = [];
+      action.body.map((user) => {
+        res.push({
+          id: user._id, // eslint-disable-line no-underscore-dangle
+          name: user.name,
+        });
+        return true;
+      });
+      return res;
+    }
     default:
       return state;
   }

@@ -21,7 +21,7 @@ const initialState = [
   },
 ];
 
-function users(state = initialState, action) {
+function tasks(state = initialState, action) {
   switch (action.type) {
     case CREATE_TASK: {
       const res = state.slice(0);
@@ -43,4 +43,4 @@ function users(state = initialState, action) {
   }
 }
 
-export default users;
+export default tasks;
