@@ -7,6 +7,7 @@ import './App.scss';
 import Dashboard from './components/Dashboard';
 import Task from './components/Task';
 import CreateTask from './components/CreateTask';
+import Login from './components/Login';
 
 
 /**
@@ -21,6 +22,7 @@ const App = () => (
         </nav>
       </div>
       <Route exact path={'/'} component={Dashboard} />
+      <Route exact path={'/Login'} component={Login} />
       <Route exact path={'/task/create'} component={CreateTask} />
       <Route exact path={'/task/:taskid(\\d+)'} component={Task} />
     </div>
