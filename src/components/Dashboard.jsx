@@ -57,7 +57,7 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   // TODO Refactor
   users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.string,
     name: PropTypes.string,
   })).isRequired,
   tasks: PropTypes.arrayOf(PropTypes.shape({

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+mongoose.Promise = global.Promise;
+
 const TaskSchema = new mongoose.Schema({
   userid: {
     type: mongoose.Schema.Types.ObjectId,
