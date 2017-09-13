@@ -20,7 +20,7 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className="row content-wrapper">
+      <div className="row content-wrapper login-wrapper">
         <MuiThemeProvider>
           <div>
             <TextField
