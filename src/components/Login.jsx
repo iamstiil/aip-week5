@@ -18,6 +18,15 @@ export default class Login extends Component {
     };
   }
 
+  handleClick() {
+    fetch('http://localhost:8080/api/user/login', {
+      method: 'POST',
+      body: this.state,
+    }).then((response) => {
+      console.log(response);
+    });
+  }
+
   render() {
     return (
       <div className="row content-wrapper login-wrapper">
