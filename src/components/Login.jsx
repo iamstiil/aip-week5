@@ -32,8 +32,10 @@ class Login extends Component {
     }).then(response => response.json()).then((body) => {
       if (body.error) {
         if (body.error.email) {
+          // TODO display error when email not valid
           console.log(body.error.email);
-        } else if (body.error.password) {
+        } else if (body.error.password)
+        // TODO display error when password not valid
           console.log(body.error.password);
         }
       } else {

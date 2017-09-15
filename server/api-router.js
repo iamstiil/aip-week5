@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-const router = express.Router();
 const User = require('./models/User');
 const Task = require('./models/Task');
 const validateSignupInput = require('../src/shared/validations');
+
+const router = express.Router();
 
 mongoose.connect('mongodb://localhost:27017/test', { useMongoClient: true });
 
@@ -13,10 +14,7 @@ router.use(bodyParser.json());
 
 router.post('/user/login',(req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
-  console.log(req.body);
   User.findOne({ email }).exec().then((response) => {
-    console.log(response);
     if (!response) {
       res.status(404).json({ error: { email: 'Email is not registered' } });
     }
