@@ -1,32 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import PropTypes from 'prop-types';
 import 'bootstrap';
 import './App.scss';
-
-import Dashboard from './components/Dashboard';
-import Task from './components/Task';
-import CreateTask from './components/CreateTask';
-import Login from './components/Login';
-
 
 /**
  * Component class for routing
  */
-const App = () => (
-  <Router>
-    <div className="container-fluid">
-      <div className="row">
-        <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-          <Link className="navbar-brand" to={'/'}>Homize</Link>
-        </nav>
-      </div>
-      <Route exact path={'/'} component={Dashboard} />
-      <Route exact path={'/Login'} component={Login} />
-      <Route exact path={'/task/create'} component={CreateTask} />
-      <Route exact path={'/task/:taskid(\\d+)'} component={Task} />
+const App = ({ route }) => (
+  <div className="container-fluid">
+    <div className="row">
+      <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <Link className="navbar-brand" to={'/'}>Homize</Link>
+      </nav>
     </div>
-  </Router>
+    {renderRoutes(route.routes)}
+  </div>
 );
+
+App.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  route: PropTypes.object.isRequired,
+};
 
 export default App;

@@ -23,3 +23,13 @@ export function initializeApp() {
     });
   };
 }
+
+export function userSignupRequest(userData) {
+  return () => fetch('http://localhost:8080/api/user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  });
+}
