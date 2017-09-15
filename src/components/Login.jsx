@@ -22,8 +22,8 @@ export default class Login extends Component {
     fetch('http://localhost:8080/api/user/login', {
       method: 'POST',
       body: this.state,
-    }).then((response) => {
-      console.log(response);
+    }).then(response => response.json()).then((body) => {
+      console.log(body);
     });
   }
 

@@ -11,6 +11,27 @@ mongoose.connect('mongodb://localhost:27017/test', { useMongoClient: true });
 
 router.use(bodyParser.json());
 
+router.post('/user/login',(req, res) => {
+  const { email, password } = req.body;
+  console.log(email, password);
+  console.log(req.body);
+  User.findOne({ email }).exec().then((response) => {
+    console.log(response);
+    if (!response) {
+      res.status(404).json({ email: 'Email is not registered'});
+    }
+    let passwordDigest = null;
+    bcrypt.hash(password, 10, (err, hash) => {
+      passwordDigest = hash;
+    });
+    if (response.password_digest === passwordDigest ) {
+      res.json({ email: response.email, name: response.name });
+    } else {
+      res.status(400).json({ password: 'Password is not valid' });
+    }
+  })
+});
+
 router.get('/user', (req, res) => {
   User.find({}).exec().then((response) => {
     res.json(response);
