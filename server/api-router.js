@@ -18,17 +18,15 @@ router.post('/user/login',(req, res) => {
   User.findOne({ email }).exec().then((response) => {
     console.log(response);
     if (!response) {
-      res.status(404).json({ email: 'Email is not registered'});
+      res.status(404).json({ error: { email: 'Email is not registered' } });
     }
-    let passwordDigest = null;
-    bcrypt.hash(password, 10, (err, hash) => {
-      passwordDigest = hash;
+    bcrypt.compare(password, response.password_digest, (err, hash) => {
+      if(res) {
+        res.json({ email: response.email, name: response.name });
+      } else {
+        res.status(400).json({ error: { password: 'Password is not valid' }});
+      }
     });
-    if (response.password_digest === passwordDigest ) {
-      res.json({ email: response.email, name: response.name });
-    } else {
-      res.status(400).json({ password: 'Password is not valid' });
-    }
   })
 });
 

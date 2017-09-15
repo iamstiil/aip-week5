@@ -5,6 +5,7 @@ import {
   CREATE_TASK,
   INITIALIZE,
   INITIALIZED,
+  USER_LOGGED_IN,
 } from './actionTypes';
 
 /**
@@ -32,4 +33,8 @@ export function userSignupRequest(userData) {
     },
     body: JSON.stringify(userData),
   });
+}
+
+export function userLoggedIn(user) {
+  return { type: USER_LOGGED_IN, user };
 }
