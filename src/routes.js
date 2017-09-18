@@ -7,18 +7,12 @@ import Login from './components/Login';
 
 import requireAuth from './utils/requireAuth';
 
-function checkAuth(args) {
-  console.log(args);
-  return false;
-}
-
 const routes = [{
   component: App,
   routes: [
     {
       path: '/',
       exact: true,
-      matches: args => checkAuth(args),
       component: requireAuth(Dashboard),
     },
     {
