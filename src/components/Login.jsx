@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { connect } from 'react-redux';
 import { userLoggedIn } from '../actions';
 import './Login.scss';
@@ -16,10 +16,14 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-
+      formData: {
+        email: '',
+        password: '',
+      },
+      submitted: false,
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleClick() {
@@ -46,30 +50,54 @@ class Login extends Component {
     });
   }
 
+  handleSubmit() {
+    this.setState({ submitted: true }, () => {
+      setTimeout(() => this.setState({ submitted: false }), 5000);
+    });
+  }
+
+  handleChange(event) {
+    const { formData } = this.state;
+    formData[event.target.name] = event.target.value;
+    this.setState({ formData });
+  }
+
   render() {
     return (
       <div className="row content-wrapper login-wrapper">
         <MuiThemeProvider>
           <div>
-            <TextField
-              hintText="Enter your Email address"
-              floatingLabelText="Email"
-              onChange={(event, emailValue) => this.setState({ email: emailValue })}
-            />
-            <br />
-            <TextField
-              type="password"
-              hintText="Enter your Password"
-              floatingLabelText="Password"
-              onChange={(event, passwordValue) => this.setState({ password: passwordValue })}
-            />
-            <br />
-            <RaisedButton
-              label="Submit"
-              primary
-              style={style}
-              onClick={event => this.handleClick(event)}
-            />
+            <ValidatorForm
+              onSubmit={this.handleSubmit}
+            >
+              <TextValidator
+                hintText="Enter your Email address"
+                floatingLabelText="Email"
+                name="email"
+                value={this.state.formData.email}
+                validators={['required', 'isEmail']}
+                errorMessages={['this field is required', 'email is not valid']}
+                onChange={this.handleChange}
+              />
+              <br />
+              <TextValidator
+                type="password"
+                name="password"
+                hintText="Enter your Password"
+                floatingLabelText="Password"
+                value={this.state.formData.password}
+                validators={['required']}
+                errorMessages={['this field is required']}
+                onChange={this.handleChange}
+              />
+              <br />
+              <RaisedButton
+                label="Submit"
+                primary
+                style={style}
+                onClick={event => this.handleClick(event)}
+              />
+            </ValidatorForm>
           </div>
         </MuiThemeProvider>
       </div>
