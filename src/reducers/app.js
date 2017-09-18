@@ -3,6 +3,8 @@ import { INITIALIZE, INITIALIZED, USER_LOGGED_IN } from '../actions/actionTypes'
 const initialState = {
   loaded: false,
   loading: false,
+  currentUser: null,
+  isAuthenticated: false,
 };
 
 function app(state = initialState, action) {
@@ -14,7 +16,7 @@ function app(state = initialState, action) {
       return { ...state, loading: false, loaded: true };
     }
     case USER_LOGGED_IN: {
-      return { ...state, currentUser: action.user };
+      return { ...state, currentUser: action.user, isAuthenticated: true };
     }
     default: {
       return state;
