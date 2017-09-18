@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
@@ -34,12 +35,13 @@ class Login extends Component {
         if (body.error.email) {
           // TODO display error when email not valid
           console.log(body.error.email);
-        } else if (body.error.password)
+        } else if (body.error.password) {
         // TODO display error when password not valid
           console.log(body.error.password);
         }
       } else {
         this.props.userLoggedIn(body);
+        this.props.history.push('/');
       }
     });
   }
@@ -76,6 +78,7 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  history: ReactRouterPropTypes.history.isRequired,
   userLoggedIn: PropTypes.func.isRequired,
 };
 

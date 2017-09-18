@@ -5,12 +5,18 @@ import CreateTask from './components/CreateTask';
 import Signup from './components/Signup';
 import Login from './components/Login';
 
+function checkAuth(args) {
+  console.log(args);
+  return false;
+}
+
 const routes = [{
   component: App,
   routes: [
     {
       path: '/',
       exact: true,
+      matches: args => checkAuth(args),
       component: Dashboard,
     },
     {
