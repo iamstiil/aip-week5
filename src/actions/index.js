@@ -35,6 +35,6 @@ export function userSignupRequest(userData) {
   });
 }
 
-export function userLoggedIn(user) {
-  return { type: USER_LOGGED_IN, user };
+export function userLoggedIn(token) {
+  return { type: USER_LOGGED_IN, token };
 }

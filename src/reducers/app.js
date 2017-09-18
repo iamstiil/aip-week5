@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import { INITIALIZE, INITIALIZED, USER_LOGGED_IN } from '../actions/actionTypes';
 
 const initialState = {
@@ -16,7 +17,9 @@ function app(state = initialState, action) {
       return { ...state, loading: false, loaded: true };
     }
     case USER_LOGGED_IN: {
-      return { ...state, currentUser: action.user, isAuthenticated: true };
+      localStorage.setItem('jwtToken', action.token);
+      const user = jwt.decode(action.token);
+      return { ...state, currentUser: user, isAuthenticated: true, token: action.token };
     }
     default: {
       return state;

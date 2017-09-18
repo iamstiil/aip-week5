@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('./models/User');
 const Task = require('./models/Task');
 const validateSignupInput = require('../src/shared/validations');
@@ -13,14 +14,22 @@ mongoose.connect('mongodb://localhost:27017/test', { useMongoClient: true });
 router.use(bodyParser.json());
 
 router.post('/user/login',(req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body.formData;
+  if (!email || !password) {
+    res.status(400).json({ error: { default: 'No input registered. Try again.' } })
+  }
+
   User.findOne({ email }).exec().then((response) => {
     if (!response) {
       res.status(404).json({ error: { email: 'Email is not registered' } });
     }
     bcrypt.compare(password, response.password_digest, (err, hash) => {
       if(res) {
-        res.json({ email: response.email, name: response.name });
+        const token = jwt.sign({
+          email: response.email,
+          name: response.name,
+        }, 'secretsecretsecretsecret');
+        res.json({ token });
       } else {
         res.status(400).json({ error: { password: 'Password is not valid' }});
       }

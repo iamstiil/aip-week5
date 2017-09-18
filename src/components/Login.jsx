@@ -44,7 +44,7 @@ class Login extends Component {
           console.log(body.error.password);
         }
       } else {
-        this.props.userLoggedIn(body);
+        this.props.userLoggedIn(body.token);
         this.props.history.push('/');
       }
     });
