@@ -5,6 +5,8 @@ import CreateTask from './components/CreateTask';
 import Signup from './components/Signup';
 import Login from './components/Login';
 
+import requireAuth from './utils/requireAuth';
+
 function checkAuth(args) {
   console.log(args);
   return false;
@@ -17,7 +19,7 @@ const routes = [{
       path: '/',
       exact: true,
       matches: args => checkAuth(args),
-      component: Dashboard,
+      component: requireAuth(Dashboard),
     },
     {
       path: '/signup',
@@ -32,12 +34,12 @@ const routes = [{
     {
       path: '/task/create',
       exact: true,
-      component: CreateTask,
+      component: requireAuth(CreateTask),
     },
     {
       path: '/task/:taskid(\\d+)',
       exact: true,
-      component: Task,
+      component: requireAuth(Task),
     },
   ],
 }];
