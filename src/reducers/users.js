@@ -1,8 +1,8 @@
-import { INITIALIZED } from '../actions/actionTypes';
+import { USERS_LOADED } from '../actions/actionTypes';
 
 function users(state = [], action) {
   switch (action.type) {
-    case INITIALIZED: {
+    case USERS_LOADED: {
       const res = [];
       action.body.map((user) => {
         res.push({

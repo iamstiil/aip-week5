@@ -4,8 +4,8 @@
 import {
   CREATE_TASK,
   INITIALIZE,
-  INITIALIZED,
   USER_LOGGED_IN,
+  USERS_LOADED,
 } from './actionTypes';
 
 /**
@@ -18,10 +18,6 @@ export function createTask(task) {
 export function initializeApp() {
   return (dispatch) => {
     dispatch({ type: INITIALIZE });
-
-    fetch('http://localhost:8080/api/user').then(response => response.json()).then((body) => {
-      dispatch({ type: INITIALIZED, body });
-    });
   };
 }
 
@@ -36,5 +32,10 @@ export function userSignupRequest(userData) {
 }
 
 export function userLoggedIn(token) {
-  return { type: USER_LOGGED_IN, token };
+  return (dispatch) => {
+    fetch('http://localhost:8080/api/user').then(response => response.json()).then((body) => {
+      dispatch({ type: USERS_LOADED, body });
+    });
+    dispatch({ type: USER_LOGGED_IN, token });
+  };
 }
