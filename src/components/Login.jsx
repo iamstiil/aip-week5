@@ -113,9 +113,8 @@ Login.propTypes = {
 export default connect(
   null,
   dispatch => ({
-    userLoggedIn: (user) => {
-      console.log(dispatch);
-      dispatch(userLoggedIn(user));
+    userLoggedIn: (token) => {
+      dispatch(userLoggedIn(token));
     },
   }),
 )(Login);

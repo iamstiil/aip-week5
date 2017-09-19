@@ -6,6 +6,7 @@ import {
   INITIALIZE,
   USER_LOGGED_IN,
   USERS_LOADED,
+  USER_LOGGED_OUT,
 } from './actionTypes';
 
 /**
@@ -37,5 +38,11 @@ export function userLoggedIn(token) {
       dispatch({ type: USERS_LOADED, body });
     });
     dispatch({ type: USER_LOGGED_IN, token });
+  };
+}
+
+export function userLoggedOut() {
+  return (dispatch) => {
+    dispatch({ type: USER_LOGGED_OUT });
   };
 }
