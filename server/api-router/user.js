@@ -1,15 +1,10 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const Task = require('../models/Task');
-const validateSignupInput = require('../../src/shared/validations');
+const db = require('./db');
 
 const router = express.Router();
-
-mongoose.connect('mongodb://localhost:27017/test', { useMongoClient: true });
 
 router.use(bodyParser.json());
 
@@ -19,7 +14,7 @@ router.post('/login',(req, res) => {
     res.status(400).json({ error: { default: 'No input registered. Try again.' } })
   }
 
-  User.findOne({ email }).exec().then((response) => {
+  db.getUserByEmail(email).then((response) => {
     if (!response) {
       res.status(404).json({ error: { email: 'Email is not registered' } });
     }
@@ -38,7 +33,7 @@ router.post('/login',(req, res) => {
 });
 
 router.get('/', (req, res) => {
-  User.find({}).exec().then((response) => {
+  db.getUsers().then((response) => {
     let users = [];
     response.map((user) => {
       users.push({
@@ -56,8 +51,8 @@ router.post('/', (req, res) => {
 
   if (isValid) {
     const { email, password, username } = req.body;
-    const emailPromise = User.find({ email }).exec();
-    const usernamePromise = User.find({ username }).exec();
+    const emailPromise = db.getUsersByEmail(email);
+    const usernamePromise = db.getUsersByUsername(username);
     
     Promise.all([emailPromise, usernamePromise]).then((responses) => {
       if (responses[0].length > 0) {
@@ -70,12 +65,7 @@ router.post('/', (req, res) => {
         res.status(400).json(errors);
       } else {
         bcrypt.hash(password, 10, function(err, hash) {
-          User.create({
-            email,
-            name: '',
-            password_digest: hash,
-            username,
-          }).then((response) => {
+          db.createUser(email, hash, username).then((response) => {
             res.json({ success: true });
           });
         });
@@ -87,7 +77,7 @@ router.post('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  User.findById(req.param('id')).exec().then((response) => {
+  db.getUserById(req.param('id')).then((response) => {
     res.json(response);
   });
 });
