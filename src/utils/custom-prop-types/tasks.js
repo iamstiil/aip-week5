@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 
 const tasks = PropTypes.arrayOf(
   PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     description: PropTypes.string,
-    userid: PropTypes.number,
+    userid: PropTypes.string,
   }),
 );
 
