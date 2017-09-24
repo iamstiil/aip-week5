@@ -1,27 +1,6 @@
 import { CREATE_TASK } from '../actions/actionTypes';
 
-const initialState = [
-  {
-    id: 1,
-    title: 'Task 1',
-    description: 'Simple task description',
-    userid: 1,
-  },
-  {
-    id: 2,
-    title: 'Task 2',
-    description: 'Simple task description',
-    userid: 2,
-  },
-  {
-    id: 3,
-    title: 'Task 3',
-    description: 'Simple task description',
-    userid: 3,
-  },
-];
-
-function tasks(state = initialState, action) {
+function tasks(state = [], action) {
   switch (action.type) {
     case CREATE_TASK: {
       const res = state.slice(0);
