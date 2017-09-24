@@ -3,9 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('./models/User');
-const Task = require('./models/Task');
-const validateSignupInput = require('../src/shared/validations');
+const User = require('../models/User');
+const Task = require('../models/Task');
+const validateSignupInput = require('../../src/shared/validations');
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost:27017/test', { useMongoClient: true });
 
 router.use(bodyParser.json());
 
-router.post('/user/login',(req, res) => {
+router.post('/login',(req, res) => {
   const { email, password } = req.body.formData;
   if (!email || !password) {
     res.status(400).json({ error: { default: 'No input registered. Try again.' } })
@@ -37,7 +37,7 @@ router.post('/user/login',(req, res) => {
   })
 });
 
-router.get('/user', (req, res) => {
+router.get('/', (req, res) => {
   User.find({}).exec().then((response) => {
     let users = [];
     response.map((user) => {
@@ -51,7 +51,7 @@ router.get('/user', (req, res) => {
   });
 });
 
-router.post('/user', (req, res) => {
+router.post('/', (req, res) => {
   const { errors, isValid } = validateSignupInput(req.body);
 
   if (isValid) {
@@ -86,7 +86,7 @@ router.post('/user', (req, res) => {
   }
 });
 
-router.get('/user/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   User.findById(req.param('id')).exec().then((response) => {
     res.json(response);
   });
