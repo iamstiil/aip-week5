@@ -10,6 +10,13 @@ import {
 } from './actionTypes';
 
 /**
+ * Helper Functions
+ */
+function fetchUsers() {
+  return fetch('http://localhost:8080/api/user').then(response => response.json());
+}
+
+/**
  * Action Creators
  */
 export function createTask(task) {
@@ -19,6 +26,11 @@ export function createTask(task) {
 export function initializeApp() {
   return (dispatch) => {
     dispatch({ type: INITIALIZE });
+    if (localStorage.getItem('jwtToken')) {
+      fetchUsers().then((users) => {
+        dispatch({ type: USERS_LOADED, users });
+      });
+    }
   };
 }
 
@@ -34,8 +46,8 @@ export function userSignupRequest(userData) {
 
 export function userLoggedIn(token) {
   return (dispatch) => {
-    fetch('http://localhost:8080/api/user').then(response => response.json()).then((body) => {
-      dispatch({ type: USERS_LOADED, body });
+    fetchUsers().then((users) => {
+      dispatch({ type: USERS_LOADED, users });
     });
     dispatch({ type: USER_LOGGED_IN, token });
   };

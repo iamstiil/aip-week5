@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-const InputGroup = ({ error, field, label, onChange, type, value }) => (
+const TextAreaGroup = ({ error, field, label, onChange, rows, value }) => (
   <div className="form-group">
     <label htmlFor={field}>{label}</label>
-    <input
+    <textarea
       className={classnames('form-control', {
         'is-invalid': error,
       })}
       id={field}
       name={field}
       onChange={onChange}
-      type={type}
+      rows={rows}
       value={value}
     />
     <div className="invalid-feedback">
@@ -21,17 +21,18 @@ const InputGroup = ({ error, field, label, onChange, type, value }) => (
   </div>
 );
 
-InputGroup.propTypes = {
+TextAreaGroup.propTypes = {
   error: PropTypes.string,
   field: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired,
+  rows: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
 };
 
-InputGroup.defaultProps = {
+TextAreaGroup.defaultProps = {
   error: '',
 };
 
-export default InputGroup;
+
+export default TextAreaGroup;

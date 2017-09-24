@@ -2,36 +2,42 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-const InputGroup = ({ error, field, label, onChange, type, value }) => (
+const SelectGroup = ({ children, error, field, label, onChange, value }) => (
   <div className="form-group">
     <label htmlFor={field}>{label}</label>
-    <input
+    <select
       className={classnames('form-control', {
         'is-invalid': error,
       })}
-      id={field}
       name={field}
       onChange={onChange}
-      type={type}
       value={value}
-    />
+    >
+      {children}
+    </select>
     <div className="invalid-feedback">
       {error}
     </div>
   </div>
 );
 
-InputGroup.propTypes = {
+SelectGroup.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
   error: PropTypes.string,
   field: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 };
 
-InputGroup.defaultProps = {
+SelectGroup.defaultProps = {
   error: '',
 };
 
-export default InputGroup;
+export default SelectGroup;

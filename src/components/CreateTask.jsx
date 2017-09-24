@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
+import InputGroup from './InputGroup';
+import TextAreaGroup from './TextAreaGroup';
+import SelectGroup from './SelectGroup';
 import { createTask } from '../actions';
 import './CreateTask.scss';
 
@@ -9,12 +13,11 @@ import './CreateTask.scss';
  */
 class CreateTask extends Component {
   /**
-   * Constructor 
+   * Get user for current path
    */
-  constructor(props) {
-    super(props);
-
+  static getUser(props) {
     let userid = -1;
+
     if (props.users.length > 0) {
       userid = props.users[0].id;
     }
@@ -23,7 +26,7 @@ class CreateTask extends Component {
       const tempid = props.history.location.search.slice(1);
       if (props.users.length > 0) {
         props.users.some((user) => {
-          if (user.id === parseInt(tempid, 10)) {
+          if (user.id === tempid) {
             userid = user.id;
             return true;
           }
@@ -32,35 +35,37 @@ class CreateTask extends Component {
       }
     }
 
+    return userid;
+  }
+
+  /**
+   * Constructor 
+   */
+  constructor(props) {
+    super(props);
+
     this.state = {
       task: {
         title: '',
         description: '',
-        user: userid,
+        user: -1,
       },
     };
 
-    this.handleTitleChange.bind(this);
-    this.handleDescriptionChange.bind(this);
-    this.handleUserChange.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleUserChange = this.handleUserChange.bind(this);
   }
 
-  /**
-   * Get user for current path
-   */
-  getUser() {
-    const userArray = this.props.users.filter((user) => {
-      if (parseInt(this.props.match.params.userid, 10) === user.id) {
-        return true;
-      }
-      return false;
-    });
+  componentWillReceiveProps(nextProps) {
+    const userid = CreateTask.getUser(nextProps);
 
-    let user = null;
-    if (userArray.length === 1) {
-      user = userArray[0];
-    }
-    return user;
+    this.setState({
+      task: {
+        ...this.state.task,
+        user: userid,
+      },
+    });
   }
 
   /**
@@ -94,7 +99,7 @@ class CreateTask extends Component {
     this.setState({
       task: {
         ...this.state.task,
-        user: parseInt(event.target.value, 10),
+        user: event.target.value,
       },
     });
   }
@@ -109,53 +114,42 @@ class CreateTask extends Component {
           <h2>Create task</h2>
         </div>
         <div className="col-12">
-          <div className="form-group">
-            <label htmlFor="task-title">Title</label>
-            <input
-              type="text"
-              className="form-control"
-              name="task-title"
-              placeholder="Enter description for the task"
-              onChange={this.handleTitleChange}
-              value={this.state.task.title}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="task-description">Description</label>
-            <textarea
-              type="text"
-              className="form-control"
-              name="task-description"
-              placeholder="Enter description for the task"
-              rows="8"
-              onChange={this.handleDescriptionChange}
-              value={this.state.task.description}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="task-user">User</label>
-            <select
-              className="form-control"
-              name="task-user"
-              rows="8"
-              onChange={this.handleUserChange}
-              value={this.state.task.user}
-            >
-              {this.props.users.map(
-                user => <option key={user.id} value={user.id}>{user.name}</option>,
-              )}
-            </select>
-          </div>
+          <InputGroup
+            field="task-title"
+            label="Title"
+            onChange={this.handleTitleChange}
+            type="text"
+            value={this.state.task.title}
+          />
+          <TextAreaGroup
+            field="task-description"
+            label="Description"
+            onChange={this.handleDescriptionChange}
+            rows={8}
+            value={this.state.task.description}
+          />
+          <SelectGroup
+            field="task-user"
+            label="User"
+            onChange={this.handleUserChange}
+            value={this.state.task.user}
+          >
+            {this.props.users.map(user => (
+              <option key={user.id} value={user.id}>{
+                user.name.length > 0 ? user.name : user.email
+              }</option>
+            ))}
+          </SelectGroup>
           <button
             className="btn btn-primary btn-submit"
             onClick={() => {
               this.props.onCreateTask(this.state.task);
-              this.props.history.goBack();
+              this.props.history.push('/');
             }}
           >Create</button>
           <button
             className="btn btn-secondary btn-cancel"
-            onClick={() => this.props.history.goBack()}
+            onClick={() => this.props.history.push('/')}
           >Cancel</button>
         </div>
       </div>
@@ -164,19 +158,13 @@ class CreateTask extends Component {
 }
 
 CreateTask.propTypes = {
-  history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  history: ReactRouterPropTypes.history.isRequired,
   onCreateTask: PropTypes.func.isRequired,
   // TODO Refactor
   users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.string,
     name: PropTypes.string,
   })).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.object,
-    isExact: PropTypes.boolean,
-    path: PropTypes.string,
-    url: PropTypes.string,
-  }).isRequired,
 };
 
 /**

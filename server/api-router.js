@@ -39,7 +39,15 @@ router.post('/user/login',(req, res) => {
 
 router.get('/user', (req, res) => {
   User.find({}).exec().then((response) => {
-    res.json(response);
+    let users = [];
+    response.map((user) => {
+      users.push({
+        id: user._id,
+        email: user.email,
+        name: user.name,
+      });
+    });
+    res.json(users);
   });
 });
 

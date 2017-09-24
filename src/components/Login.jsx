@@ -27,7 +27,6 @@ class Login extends Component {
   }
 
   handleClick() {
-    console.log(this.state);
     fetch('http://localhost:8080/api/user/login', {
       method: 'POST',
       headers: {
