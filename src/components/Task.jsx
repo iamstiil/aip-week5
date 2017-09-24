@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
+import CustomPropTypes from '../utils/custom-prop-types';
 
 /**
  * Component class displaying a single task
@@ -64,23 +65,9 @@ class Task extends Component {
 }
 
 Task.propTypes = {
-  // TODO Refactor
-  users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-  })).isRequired,
-  tasks: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    userid: PropTypes.number,
-  })).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.object,
-    isExact: PropTypes.boolean,
-    path: PropTypes.string,
-    url: PropTypes.string,
-  }).isRequired,
+  users: CustomPropTypes.users.isRequired,
+  tasks: CustomPropTypes.tasks.isRequired,
+  match: ReactRouterPropTypes.match.isRequired,
 };
 
 /**

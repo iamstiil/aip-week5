@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Card from './Card';
+import CustomPropTypes from '../utils/custom-prop-types';
 import './Dashboard.scss';
 
 /**
@@ -55,17 +55,8 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  // TODO Refactor
-  users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-  })).isRequired,
-  tasks: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    userid: PropTypes.number,
-  })).isRequired,
+  users: CustomPropTypes.users.isRequired,
+  tasks: CustomPropTypes.tasks.isRequired,
 };
 
 /**

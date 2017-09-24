@@ -6,6 +6,7 @@ import InputGroup from './InputGroup';
 import TextAreaGroup from './TextAreaGroup';
 import SelectGroup from './SelectGroup';
 import { createTask } from '../actions';
+import CustomPropTypes from '../utils/custom-prop-types';
 import './CreateTask.scss';
 
 /**
@@ -160,11 +161,7 @@ class CreateTask extends Component {
 CreateTask.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
   onCreateTask: PropTypes.func.isRequired,
-  // TODO Refactor
-  users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-  })).isRequired,
+  users: CustomPropTypes.users.isRequired,
 };
 
 /**
