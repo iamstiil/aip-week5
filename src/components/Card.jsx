@@ -5,11 +5,11 @@ import './Card.scss';
 /**
  * Component Class for Cards
  */
-const Card = props => (
+const Card = ({ children, title }) => (
   <div className="card mb-3" role="link" tabIndex={0}>
     <div className="card-body">
-      <h4 className="card-title">{props.title}</h4>
-      <p className="card-text">{props.children}</p>
+      <h4 className="card-title">{title}</h4>
+      <p className="card-text">{children}</p>
     </div>
   </div>
 );
