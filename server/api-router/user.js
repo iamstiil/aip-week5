@@ -23,7 +23,7 @@ router.post('/login',(req, res) => {
       if(res) {
         const token = jwt.sign({
           email: response.email,
-          name: response.name,
+          username: response.username,
         }, 'secretsecretsecretsecret');
         res.json({ token });
       } else {
@@ -37,10 +37,12 @@ router.get('/', (req, res) => {
   db.getUsers().then((response) => {
     let users = [];
     response.map((user) => {
+      console.log(user);
       users.push({
         id: user._id,
         email: user.email,
         name: user.name,
+        username: user.username,
       });
     });
     res.json(users);
