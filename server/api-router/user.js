@@ -53,7 +53,7 @@ router.post('/', (req, res) => {
   if (isValid) {
     const { email, password, username } = req.body;
     const emailPromise = db.getUsersByEmail(email);
-    const usernamePromise = db.getUsersByUsername(username);
+    const usernamePromise = db.getUsersByUsername(username.toLowerCase());
     
     Promise.all([emailPromise, usernamePromise]).then((responses) => {
       if (responses[0].length > 0) {
@@ -66,7 +66,7 @@ router.post('/', (req, res) => {
         res.status(400).json(errors);
       } else {
         bcrypt.hash(password, 10, function(err, hash) {
-          db.createUser(email, hash, username).then((response) => {
+          db.createUser(email, hash, username.toLowerCase()).then((response) => {
             res.json({ success: true });
           });
         });
