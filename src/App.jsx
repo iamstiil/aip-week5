@@ -35,7 +35,7 @@ const App = ({ handleLogout, history, isAuthenticated, route }) => (
               </li>
             )}
             { !isAuthenticated && (
-              <Link className="nav-link" to={'/'}>SignUp</Link>
+              <Link className="nav-link" to={'/signup'}>SignUp</Link>
             )}
           </ul>
         </div>
