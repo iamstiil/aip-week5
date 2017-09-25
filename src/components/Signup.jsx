@@ -68,7 +68,7 @@ class SignUp extends Component {
         <form className="col-4 col-auto mr-auto ml-auto" onSubmit={this.onSubmit}>
           <h2>Signup</h2>
           <InputGroup
-            error={this.state.errors.email || ''}
+            error={this.state.errors.email}
             field="email"
             label="Email address"
             onChange={this.onChange}
@@ -76,7 +76,7 @@ class SignUp extends Component {
             value={this.state.email}
           />
           <InputGroup
-            error={this.state.errors.username || ''}
+            error={this.state.errors.username}
             field="username"
             label="Username"
             onChange={this.onChange}
@@ -84,7 +84,7 @@ class SignUp extends Component {
             value={this.state.username}
           />
           <InputGroup
-            error={this.state.errors.password || ''}
+            error={this.state.errors.password}
             field="password"
             label="Password"
             onChange={this.onChange}
@@ -92,7 +92,7 @@ class SignUp extends Component {
             value={this.state.password}
           />
           <InputGroup
-            error={this.state.errors.confirmPassword || ''}
+            error={this.state.errors.confirmPassword}
             field="confirmPassword"
             label="Confirm Password"
             onChange={this.onChange}

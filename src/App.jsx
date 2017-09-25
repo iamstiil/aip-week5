@@ -16,9 +16,9 @@ const App = ({ handleLogout, history, isAuthenticated, route }) => (
     <div className="row">
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
         <Link className="navbar-brand" to={'/'}>Homize</Link>
-        { isAuthenticated && (
-          <div className="collapse navbar-collapse" id="main-menu">
-            <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+        <div className="collapse navbar-collapse" id="main-menu">
+          <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+            { isAuthenticated && (
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" alt="Open Menu" height={28} />
@@ -33,9 +33,12 @@ const App = ({ handleLogout, history, isAuthenticated, route }) => (
                   </a>
                 </div>
               </li>
-            </ul>
-          </div>
-        )}
+            )}
+            { !isAuthenticated && (
+              <Link className="nav-link" to={'/'}>SignUp</Link>
+            )}
+          </ul>
+        </div>
       </nav>
     </div>
     {renderRoutes(route.routes)}

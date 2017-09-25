@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('./db');
+const validateSignupInput = require('../../src/shared/validations');
 
 const router = express.Router();
 
