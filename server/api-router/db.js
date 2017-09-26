@@ -3,6 +3,7 @@
  */
 const mongoose = require('mongoose');
 const User = require('../models/User');
+const Task = require('../models/Task');
 
 /**
  * Connect to MongoDB
@@ -75,6 +76,14 @@ function getUserById(id) {
   return User.findById(id).exec();
 }
 
+function createTask(title, description, user) {
+  return Task.create({
+    title,
+    description,
+    user,
+  });
+}
+
 /**
  * Export
  */
@@ -85,4 +94,5 @@ module.exports = {
   getUsersByUsername,
   getUserByEmail,
   getUserById,
+  createTask,
 };

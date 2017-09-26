@@ -10,7 +10,9 @@ mongoose.Promise = global.Promise;
  * Mongooses schema for tasks
  */
 const TaskSchema = new mongoose.Schema({
-  userid: {
+  title: String,
+  description: String,
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
