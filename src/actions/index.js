@@ -6,6 +6,7 @@ import {
   INITIALIZE,
   USER_LOGGED_IN,
   USERS_LOADED,
+  TASKS_LOADED,
   USER_LOGGED_OUT,
 } from './actionTypes';
 
@@ -14,6 +15,10 @@ import {
  */
 function fetchUsers() {
   return fetch('http://localhost:8080/api/user').then(response => response.json());
+}
+
+function fetchTasks() {
+  return fetch('http://localhost:8080/api/task').then(response => response.json());
 }
 
 /**
@@ -29,6 +34,9 @@ export function initializeApp() {
     if (localStorage.getItem('jwtToken')) {
       fetchUsers().then((users) => {
         dispatch({ type: USERS_LOADED, users });
+      });
+      fetchTasks().then((tasks) => {
+        dispatch({ type: TASKS_LOADED, tasks });
       });
     }
   };
