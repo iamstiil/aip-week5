@@ -35,6 +35,7 @@ export function initializeApp() {
 }
 
 export function userSignupRequest(userData) {
+  // TODO: Refactor into reducer users
   return () => fetch('http://localhost:8080/api/user', {
     method: 'POST',
     headers: {
