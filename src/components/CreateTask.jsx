@@ -1,3 +1,6 @@
+/**
+ * Import dependencies
+ */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -58,6 +61,9 @@ class CreateTask extends Component {
     this.handleUserChange = this.handleUserChange.bind(this);
   }
 
+  /**
+   * React lifecycle methods
+   */
   componentWillReceiveProps(nextProps) {
     const userid = CreateTask.getUser(nextProps);
 
@@ -158,6 +164,9 @@ class CreateTask extends Component {
   }
 }
 
+/**
+ * PropTypes
+ */
 CreateTask.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
   onCreateTask: PropTypes.func.isRequired,

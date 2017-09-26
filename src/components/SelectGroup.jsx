@@ -1,7 +1,13 @@
+/**
+ * Import dependencies
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+/**
+ * Component class for select fields
+ */
 const SelectGroup = ({ children, error, field, label, onChange, value }) => (
   <div className="form-group">
     <label htmlFor={field}>{label}</label>
@@ -21,6 +27,9 @@ const SelectGroup = ({ children, error, field, label, onChange, value }) => (
   </div>
 );
 
+/**
+ * PropTypes
+ */
 SelectGroup.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
@@ -36,8 +45,14 @@ SelectGroup.propTypes = {
   ]).isRequired,
 };
 
+/**
+ * DefaultProps
+ */
 SelectGroup.defaultProps = {
   error: '',
 };
 
+/**
+ * Export
+ */
 export default SelectGroup;

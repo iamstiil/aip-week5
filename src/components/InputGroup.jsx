@@ -1,7 +1,13 @@
+/**
+ * Import dependencies
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+/**
+ * Component class for inputs
+ */
 const InputGroup = ({ error, field, label, onChange, type, value }) => (
   <div className="form-group">
     <label htmlFor={field}>{label}</label>
@@ -21,6 +27,9 @@ const InputGroup = ({ error, field, label, onChange, type, value }) => (
   </div>
 );
 
+/**
+ * PropTypes
+ */
 InputGroup.propTypes = {
   error: PropTypes.string,
   field: PropTypes.string.isRequired,
@@ -30,8 +39,14 @@ InputGroup.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
+/**
+ * DefaultProps
+ */
 InputGroup.defaultProps = {
   error: '',
 };
 
+/**
+ * Export
+ */
 export default InputGroup;

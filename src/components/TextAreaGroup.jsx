@@ -1,7 +1,13 @@
+/**
+ * Import dependencies
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+/**
+ * Component class for text area
+ */
 const TextAreaGroup = ({ error, field, label, onChange, rows, value }) => (
   <div className="form-group">
     <label htmlFor={field}>{label}</label>
@@ -21,6 +27,9 @@ const TextAreaGroup = ({ error, field, label, onChange, rows, value }) => (
   </div>
 );
 
+/**
+ * PropTypes
+ */
 TextAreaGroup.propTypes = {
   error: PropTypes.string,
   field: PropTypes.string.isRequired,
@@ -30,9 +39,14 @@ TextAreaGroup.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
+/**
+ * DefaultProps
+ */
 TextAreaGroup.defaultProps = {
   error: '',
 };
 
-
+/**
+ * Export
+ */
 export default TextAreaGroup;

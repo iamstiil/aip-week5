@@ -1,5 +1,11 @@
+/**
+ * Import dependencies
+ */
 import { USERS_LOADED } from '../actions/actionTypes';
 
+/**
+ * Reducer for users
+ */
 function users(state = [], action) {
   switch (action.type) {
     case USERS_LOADED: {
@@ -20,4 +26,7 @@ function users(state = [], action) {
   }
 }
 
+/**
+ * Export
+ */
 export default users;

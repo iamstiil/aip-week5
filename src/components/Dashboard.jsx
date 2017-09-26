@@ -1,3 +1,6 @@
+/**
+ * Import dependencies
+ */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -10,7 +13,7 @@ import './Dashboard.scss';
  */
 class Dashboard extends Component {
   /**
-   * get all lists of users with tasks
+   * Get all lists of users with tasks
    */
   getUserLists() {
     return this.props.users.map(user => (
@@ -54,6 +57,9 @@ class Dashboard extends Component {
   }
 }
 
+/**
+ * PropTypes
+ */
 Dashboard.propTypes = {
   users: CustomPropTypes.users.isRequired,
   tasks: CustomPropTypes.tasks.isRequired,

@@ -1,3 +1,6 @@
+/**
+ * Import dependencies
+ */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -8,11 +11,20 @@ import { connect } from 'react-redux';
 import { userLoggedIn } from '../actions';
 import './Login.scss';
 
+/**
+ * Inline styles
+ */
 const style = {
   margin: 15,
 };
 
+/**
+ * Component class for Login
+ */
 class Login extends Component {
+  /**
+   * Constructor
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -26,6 +38,10 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  /**
+   * Handle submit button click
+   * TODO: Refactor
+   */
   handleClick() {
     fetch('http://localhost:8080/api/user/login', {
       method: 'POST',
@@ -49,12 +65,19 @@ class Login extends Component {
     });
   }
 
+  /**
+   * Handle form submit
+   * TODO: Refactor
+   */
   handleSubmit() {
     this.setState({ submitted: true }, () => {
       setTimeout(() => this.setState({ submitted: false }), 5000);
     });
   }
 
+  /**
+   * Handle input field change
+   */
   handleChange(event) {
     const { formData } = this.state;
     formData[event.target.name] = event.target.value;
@@ -104,11 +127,17 @@ class Login extends Component {
   }
 }
 
+/**
+ * PropTypes
+ */
 Login.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
   userLoggedIn: PropTypes.func.isRequired,
 };
 
+/**
+ * Connect Redux with Component
+ */
 export default connect(
   null,
   dispatch => ({

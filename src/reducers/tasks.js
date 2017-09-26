@@ -1,5 +1,11 @@
+/**
+ * Import dependencies
+ */
 import { CREATE_TASK } from '../actions/actionTypes';
 
+/**
+ * Reducer for tasks
+ */
 function tasks(state = [], action) {
   switch (action.type) {
     case CREATE_TASK: {
@@ -22,4 +28,7 @@ function tasks(state = [], action) {
   }
 }
 
+/**
+ * Export
+ */
 export default tasks;

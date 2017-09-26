@@ -1,12 +1,21 @@
+/**
+ * Import dependencies
+ */
 import jwt from 'jsonwebtoken';
 import { INITIALIZE, USER_LOGGED_IN, USER_LOGGED_OUT } from '../actions/actionTypes';
 
+/**
+ * Initial state
+ */
 const initialState = {
   currentUser: null,
   isAuthenticated: false,
   token: null,
 };
 
+/**
+ * Reducer for app
+ */
 function app(state = initialState, action) {
   switch (action.type) {
     case INITIALIZE: {
@@ -32,4 +41,7 @@ function app(state = initialState, action) {
   }
 }
 
+/**
+ * Export
+ */
 export default app;

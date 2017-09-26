@@ -1,3 +1,6 @@
+/**
+ * Import dependencies
+ */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -6,6 +9,9 @@ import { userSignupRequest } from '../actions';
 import validateSignupInput from '../shared/validations';
 import InputGroup from './InputGroup';
 
+/**
+ * Component class for SignUp
+ */
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -111,11 +117,17 @@ class SignUp extends Component {
   }
 }
 
+/**
+ * PropTypes
+ */
 SignUp.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
   userSignupRequest: PropTypes.func.isRequired,
 };
 
+/**
+ * Connect Redux with Component
+ */
 export default connect(
   null,
   { userSignupRequest },

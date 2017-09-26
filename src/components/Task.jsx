@@ -1,3 +1,6 @@
+/**
+ * Import dependencies
+ */
 import React, { Component } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
@@ -64,6 +67,9 @@ class Task extends Component {
   }
 }
 
+/**
+ * PropTypes
+ */
 Task.propTypes = {
   users: CustomPropTypes.users.isRequired,
   tasks: CustomPropTypes.tasks.isRequired,
