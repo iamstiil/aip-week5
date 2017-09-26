@@ -23,7 +23,12 @@ router.post('/', (req, res) => {
       res.status(400).json({ errors: { default: 'The server had problems creating your task. Pleast try again.' } });
     }
 
-    res.json(task);
+    res.json({
+      description: task.description,
+      id: task._id,
+      title: task.title,
+      user: task.user,
+    });
   });
 });
 
