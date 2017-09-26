@@ -3,8 +3,6 @@
  */
 const mongoose = require('mongoose');
 const User = require('../models/User');
-const Task = require('../models/Task');
-const validateSignupInput = require('../../src/shared/validations');
 
 /**
  * Connect to MongoDB
@@ -19,11 +17,11 @@ mongoose.connect('mongodb://localhost:27017/test', { useMongoClient: true });
  * @param  {string}  username        Username
  * @return  {Promise}  Promise returning the created user
  */
-function createUser(email, password_digest, username) {
+function createUser(email, passwordDigest, username) {
   return User.create({
     email,
     name: '',
-    password_digest,
+    passwordDigest,
     username,
   });
 }
@@ -86,4 +84,5 @@ module.exports = {
   getUsersByEmail,
   getUsersByUsername,
   getUserByEmail,
+  getUserById,
 };

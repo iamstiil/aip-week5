@@ -15,13 +15,13 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 // Handle login
-router.post('/login',(req, res) => {
+router.post('/login', (req, res) => {
   // Extract email and password from body
   const { email, password } = req.body.formData;
 
   // If variables are empty, there was no input submitted
   if (!email || !password) {
-    res.status(400).json({ error: { default: 'No input registered. Try again.' } })
+    res.status(400).json({ error: { default: 'No input registered. Try again.' } });
   }
 
   // Fetch user from database using email
@@ -33,7 +33,7 @@ router.post('/login',(req, res) => {
 
     // Check submitted password with saved hash
     bcrypt.compare(password, response.password_digest, (err, isValid) => {
-      if(isValid) {
+      if (isValid) {
         // TODO: Refactor secret into seperate config file
         const token = jwt.sign({
           email: response.email,
@@ -41,17 +41,17 @@ router.post('/login',(req, res) => {
         }, 'secretsecretsecretsecret');
         res.json({ token });
       } else {
-        res.status(400).json({ error: { password: 'Password is not valid' }});
+        res.status(400).json({ error: { password: 'Password is not valid' } });
       }
     });
-  })
+  });
 });
 
 // Handle user list request
 router.get('/', (req, res) => {
   // Fetch user list from database
   db.getUsers().then((response) => {
-    let users = [];
+    const users = [];
     // Extract specific fields from response
     response.map((user) => {
       users.push({
@@ -60,6 +60,7 @@ router.get('/', (req, res) => {
         name: user.name,
         username: user.username,
       });
+      return user;
     });
     res.json(users);
   });
@@ -91,10 +92,14 @@ router.post('/', (req, res) => {
         res.status(400).json(errors);
       } else {
         // Hash password
-        bcrypt.hash(password, 10, function(err, hash) {
+        bcrypt.hash(password, 10, (err, hash) => {
           // Create user
           db.createUser(email, hash, username.toLowerCase()).then((response) => {
-            res.json({ success: true });
+            if (response != null) {
+              res.json({ success: true });
+            } else {
+              res.json({ success: false });
+            }
           });
         });
       }
