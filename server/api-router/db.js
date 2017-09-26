@@ -84,6 +84,10 @@ function createTask(title, description, user) {
   });
 }
 
+function getTasks() {
+  return Task.find({}).exec();
+}
+
 /**
  * Export
  */
@@ -95,4 +99,5 @@ module.exports = {
   getUserByEmail,
   getUserById,
   createTask,
+  getTasks,
 };

@@ -11,6 +11,24 @@ const router = express.Router();
 // Parse request body stream as json
 router.use(bodyParser.json());
 
+router.get('/', (req, res) => {
+  // Fetch user list from database
+  db.getTasks().then((response) => {
+    const tasks = [];
+    // Extract specific fields from response
+    response.map((task) => {
+      tasks.push({
+        description: task.description,
+        id: task._id,
+        title: task.title,
+        user: task.user,
+      });
+      return task;
+    });
+    res.json(tasks);
+  });
+});
+
 router.post('/', (req, res) => {
   const { title, description, user } = req.body;
 
