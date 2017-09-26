@@ -13,6 +13,7 @@ function tasks(state = [], action) {
       const res = [];
       action.tasks.map((task) => {
         res.push({
+          id: task.id,
           title: task.title,
           description: task.description,
           user: task.user,
