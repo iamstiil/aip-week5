@@ -49,7 +49,7 @@ class CreateTask extends Component {
       task: {
         title: '',
         description: '',
-        user: -1,
+        user: CreateTask.getUser(props),
       },
     };
 
@@ -137,7 +137,7 @@ class CreateTask extends Component {
           >
             {this.props.users.map(user => (
               <option key={user.id} value={user.id}>{
-                user.name.length > 0 ? user.name : user.email
+                user.name.length > 0 ? user.name : user.username
               }</option>
             ))}
           </SelectGroup>
