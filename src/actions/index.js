@@ -45,6 +45,16 @@ export function userSignupRequest(userData) {
   });
 }
 
+export function createTaskRequest(task) {
+  return () => fetch('http://localhost:8080/api/task', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(task),
+  });
+}
+
 export function userLoggedIn(token) {
   return (dispatch) => {
     fetchUsers().then((users) => {

@@ -11,7 +11,7 @@ const router = express.Router();
 // include user API
 router.use('/user', userRouter);
 // include task API
-router.use('/task', userRouter);
+router.use('/task', taskRouter);
 
 /**
  * Export

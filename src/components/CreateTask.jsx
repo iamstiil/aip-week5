@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import InputGroup from './InputGroup';
 import TextAreaGroup from './TextAreaGroup';
 import SelectGroup from './SelectGroup';
-import { createTask } from '../actions';
+import { createTask, createTaskRequest } from '../actions';
 import CustomPropTypes from '../utils/custom-prop-types';
 import './CreateTask.scss';
 
@@ -149,9 +149,24 @@ class CreateTask extends Component {
           </SelectGroup>
           <button
             className="btn btn-primary btn-submit"
+            disabled={this.state.isLoading}
             onClick={() => {
-              this.props.onCreateTask(this.state.task);
-              this.props.history.push('/');
+              this.setState({
+                isLoading: true,
+              });
+              this.props.onCreateTaskRequest(this.state.task).then((res) => {
+                if (res.status === 200) {
+                  res.json().then((task) => {
+                    this.props.onCreateTask(task);
+                    this.props.history.push('/');
+                  });
+                } else if (res.status === 400) {
+                  this.setState({
+                    errors: 'Task could not be created! Please try again.',
+                    isLoading: false,
+                  });
+                }
+              });
             }}
           >Create</button>
           <button
@@ -170,6 +185,7 @@ class CreateTask extends Component {
 CreateTask.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
   onCreateTask: PropTypes.func.isRequired,
+  onCreateTaskRequest: PropTypes.func.isRequired,
   users: CustomPropTypes.users.isRequired,
 };
 
@@ -182,5 +198,6 @@ export default connect(
   }),
   dispatch => ({
     onCreateTask: task => dispatch(createTask(task)),
+    onCreateTaskRequest: task => dispatch(createTaskRequest(task)),
   }),
 )(CreateTask);
