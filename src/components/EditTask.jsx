@@ -82,7 +82,7 @@ class EditTask extends Component {
         });
       } else {
         res.json().then((errors) => {
-          console.log(errors);
+          this.setState({ errors });
         });
       }
     });
@@ -92,8 +92,18 @@ class EditTask extends Component {
     return (
       <div className="row content-wrapper">
         <div className="col-12">
+          <div className="view-menu float-right">
+            <button className="btn btn-outline-primary oi oi-pencil" />
+          </div>
           <h2>Edit task</h2>
         </div>
+        {this.state.errors && this.state.errors.default && (
+          <div className="col-12">
+            <div className="alert alert-warning" role="alert">
+              {this.state.errors.default}
+            </div>
+          </div>
+        )}
         {this.state.task && (
           <div className="col-12">
             <InputGroup
