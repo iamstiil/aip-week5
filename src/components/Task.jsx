@@ -2,6 +2,7 @@
  * Import dependencies
  */
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import CustomPropTypes from '../utils/custom-prop-types';
@@ -33,7 +34,7 @@ class Task extends Component {
    */
   getTask() {
     const taskArray = this.props.tasks.filter((task) => {
-      if (parseInt(this.props.match.params.taskid, 10) === task.id) {
+      if (this.props.match.params.taskid === task.id) {
         return true;
       }
       return false;
@@ -51,13 +52,13 @@ class Task extends Component {
     if (task === null) {
       return false;
     }
-    const user = this.getUser(task.userid);
+    const user = this.getUser(task.user);
 
     return (
       <div className="row content-wrapper">
         <div className="col-12">
           <div className="view-menu float-right">
-            <button className="btn btn-outline-primary oi oi-pencil" />
+            <Link to={`${this.props.match.url}/edit`}><button className="btn btn-outline-primary oi oi-pencil" /></Link>
           </div>
           <h2>{task.title}<span> assigned to {user.name}</span></h2>
         </div>

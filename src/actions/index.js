@@ -3,6 +3,7 @@
  */
 import {
   CREATE_TASK,
+  EDIT_TASK,
   INITIALIZE,
   USER_LOGGED_IN,
   USERS_LOADED,
@@ -76,4 +77,18 @@ export function userLoggedOut() {
   return (dispatch) => {
     dispatch({ type: USER_LOGGED_OUT });
   };
+}
+
+export function editTask(task) {
+  return { type: EDIT_TASK, task };
+}
+
+export function editTaskRequest(task) {
+  return () => fetch(`http://localhost:8080/api/task/${task.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(task),
+  });
 }

@@ -12,7 +12,7 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 router.get('/', (req, res) => {
-  // Fetch user list from database
+  // Fetch task list from database
   db.getTasks().then((response) => {
     const tasks = [];
     // Extract specific fields from response
@@ -46,6 +46,36 @@ router.post('/', (req, res) => {
       id: task._id,
       title: task.title,
       user: task.user,
+    });
+  });
+});
+
+router.put('/:taskid', (req, res) => {
+  const taskid = req.params.taskid;
+  if (!/^[a-f\d]{24}$/.test(taskid)) {
+    return res.json(false);
+  }
+
+  if (taskid !== req.body.id) {
+    return res.json({ errors: { default: 'Task IDs don\'t match' } });
+  }
+
+  const reqTask = {
+    description: req.body.description,
+    title: req.body.title,
+    user: req.body.user,
+  };
+
+  return db.updateTask({ _id: taskid }, reqTask).then((updatedTask) => {
+    if (!updatedTask) {
+      return res.status(400).json({ errors: { default: 'Task could not be updated. Please try again.' } });
+    }
+
+    return res.json({
+      description: updatedTask.description,
+      id: updatedTask._id,
+      title: updatedTask.title,
+      user: updatedTask.user,
     });
   });
 });

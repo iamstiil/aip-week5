@@ -70,12 +70,20 @@ function getUserByEmail(email) {
  * Get user with a specific ID
  *
  * @param  {string}  id  Mongoose ID
- * @return  {Promise}  Promise returning the created user
+ * @return  {Promise}  Promise returning a user with given ID or null
  */
 function getUserById(id) {
   return User.findById(id).exec();
 }
 
+/**
+ * Create new task
+ *
+ * @param  {string}  title        Task title
+ * @param  {string}  description  Task description 
+ * @param  {string}  user         ID of User this task is attached to
+ * @return  {Promise}  Promise returning the created task
+ */
 function createTask(title, description, user) {
   return Task.create({
     title,
@@ -84,8 +92,33 @@ function createTask(title, description, user) {
   });
 }
 
+/**
+ * Get all tasks
+ *
+ * @return  {Promise}  Promise returning an array of all tasks or empty array
+ */
 function getTasks() {
   return Task.find({}).exec();
+}
+
+/**
+ * Get task with a specific id
+ *
+ * @param  {string}  id  
+ * @return  {Promise}  Promise returning a task with given ID or null
+ */
+function getTaskById(id) {
+  return Task.findOne({ _id: id }).exec();
+}
+
+/**
+ * Update task
+ *
+ * @param  {Task}  Task used to update
+ * @return  {Promise}  Promise returning the updated task
+ */
+function updateTask(oldTask, newTask) {
+  return Task.findOneAndUpdate(oldTask, newTask, {new: true}).exec();
 }
 
 /**
@@ -100,4 +133,6 @@ module.exports = {
   getUserById,
   createTask,
   getTasks,
+  getTaskById,
+  updateTask,
 };

@@ -2,6 +2,7 @@ import App from './App';
 import Dashboard from './components/Dashboard';
 import Task from './components/Task';
 import CreateTask from './components/CreateTask';
+import EditTask from './components/EditTask';
 import Signup from './components/Signup';
 import Login from './components/Login';
 
@@ -31,9 +32,14 @@ const routes = [{
       component: requireAuth(CreateTask),
     },
     {
-      path: '/task/:taskid(\\d+)',
+      path: '/task/:taskid',
       exact: true,
       component: requireAuth(Task),
+    },
+    {
+      path: '/task/:taskid/edit',
+      exact: true,
+      component: requireAuth(EditTask),
     },
   ],
 }];
