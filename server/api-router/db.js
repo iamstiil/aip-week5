@@ -122,6 +122,16 @@ function updateTask(oldTask, newTask) {
 }
 
 /**
+ * Delete task
+ *
+ * @param  {string}  ID of task to be deleted
+ * @return  {Promise}  Promise returning the deleted task
+ */
+function deleteTask(taskid) {
+  return Task.findByIdAndRemove(taskid).exec();
+}
+
+/**
  * Export
  */
 module.exports = {
@@ -135,4 +145,5 @@ module.exports = {
   getTasks,
   getTaskById,
   updateTask,
+  deleteTask,
 };

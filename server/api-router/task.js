@@ -80,4 +80,17 @@ router.put('/:taskid', (req, res) => {
   });
 });
 
+router.delete('/:taskid', (req, res) => {
+  const taskid = req.params.taskid;
+  db.deleteTask(taskid).then((task) => {
+    if (!task) {
+      return res.status(400).json({ errors: { default: 'Task not found.' } });
+    }
+
+    return res.json({
+      id: task._id,
+    });
+  });
+});
+
 module.exports = router;

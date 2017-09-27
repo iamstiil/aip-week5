@@ -9,7 +9,7 @@ import CustomPropTypes from '../utils/custom-prop-types';
 import InputGroup from './InputGroup';
 import TextAreaGroup from './TextAreaGroup';
 import SelectGroup from './SelectGroup';
-import { editTask, editTaskRequest } from '../actions';
+import { deleteTask, deleteTaskRequest, editTask, editTaskRequest } from '../actions';
 
 /**
  * Component class for editing tasks
@@ -41,11 +41,14 @@ class EditTask extends Component {
 
     this.state = {
       isLoading: false,
+      popUp: false,
       task: EditTask.getTask(props),
     };
 
+    this.closeModal = this.closeModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   /**
@@ -88,12 +91,71 @@ class EditTask extends Component {
     });
   }
 
+  /**
+   * Handle deletion of task
+   */
+  handleDelete() {
+    this.setState({ isLoading: true });
+    this.props.onDeleteTaskRequest(this.state.task).then((res) => {
+      if (res.status === 200) {
+        res.json().then((task) => {
+          this.props.onDeleteTask(task);
+          this.closeModal();
+          this.props.history.push('/');
+        });
+      } else {
+        res.json().then((errors) => {
+          this.setState({ errors });
+        });
+      }
+    });
+  }
+
+  /**
+   * Close deletion modal
+   */
+  closeModal() {
+    $(this.deleteModal).modal('hide');
+  }
+
   render() {
     return (
       <div className="row content-wrapper">
+        <div
+          className="modal fade"
+          id="deleteModal"
+          role="dialog"
+          ref={(modal) => { this.deleteModal = modal; }}
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="deleteModalLabel">Delete?</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                Are you sure you want to delete this task permanently?
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" data-dismiss="modal" type="button">
+                  Cancel
+                </button>
+                <button className="btn btn-danger" onClick={this.handleDelete} type="button">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="col-12">
           <div className="view-menu float-right">
-            <button className="btn btn-outline-primary oi oi-pencil" />
+            <button
+              data-toggle="modal"
+              data-target="#deleteModal"
+              className="btn btn-outline-danger oi oi-trash"
+            />
           </div>
           <h2>Edit task</h2>
         </div>
@@ -158,17 +220,24 @@ class EditTask extends Component {
  */
 EditTask.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
+  onDeleteTask: PropTypes.func.isRequired,
+  onDeleteTaskRequest: PropTypes.func.isRequired,
   onEditTask: PropTypes.func.isRequired,
   onEditTaskRequest: PropTypes.func.isRequired,
   users: CustomPropTypes.users.isRequired,
 };
 
+/**
+ * Connect Redux with Component
+ */
 export default connect(
   state => ({
     tasks: state.tasks,
     users: state.users,
   }),
   dispatch => ({
+    onDeleteTask: task => dispatch(deleteTask(task)),
+    onDeleteTaskRequest: task => dispatch(deleteTaskRequest(task)),
     onEditTask: task => dispatch(editTask(task)),
     onEditTaskRequest: task => dispatch(editTaskRequest(task)),
   }),

@@ -1,7 +1,7 @@
 /**
  * Import dependencies
  */
-import { CREATE_TASK, EDIT_TASK, TASKS_LOADED } from '../actions/actionTypes';
+import { CREATE_TASK, DELETE_TASK, EDIT_TASK, TASKS_LOADED } from '../actions/actionTypes';
 
 
 /**
@@ -25,6 +25,15 @@ function tasks(state = [], action) {
     case CREATE_TASK: {
       const res = state.slice(0);
       res.push(action.task);
+      return res;
+    }
+    case DELETE_TASK: {
+      const res = state.slice(0).filter((task) => {
+        if (task.id === action.task.id) {
+          return false;
+        }
+        return true;
+      });
       return res;
     }
     case EDIT_TASK: {

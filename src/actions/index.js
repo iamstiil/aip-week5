@@ -4,6 +4,7 @@
 import {
   CREATE_TASK,
   EDIT_TASK,
+  DELETE_TASK,
   INITIALIZE,
   USER_LOGGED_IN,
   USERS_LOADED,
@@ -90,5 +91,18 @@ export function editTaskRequest(task) {
       'Content-type': 'application/json',
     },
     body: JSON.stringify(task),
+  });
+}
+
+export function deleteTask(task) {
+  return { type: DELETE_TASK, task };
+}
+
+export function deleteTaskRequest(task) {
+  return () => fetch(`http://localhost:8080/api/task/${task.id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-type': 'application/json',
+    },
   });
 }
