@@ -75,6 +75,7 @@ class CreateTask extends Component {
     });
   }
 
+  // TODO: Join change handlers to one like EditTask
   /**
    * Handle title change in form
    */
