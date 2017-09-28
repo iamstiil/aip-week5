@@ -55,8 +55,8 @@ class Task extends Component {
     const user = this.getUser(task.user);
 
     return (
-      <div className="row content-wrapper">
-        <div className="col-12">
+      <div className="row">
+        <div className="col-12 view-menu-wrapper">
           <div className="view-menu float-right">
             <Link to={`${this.props.match.url}/edit`}><button className="btn btn-outline-primary oi oi-pencil" /></Link>
           </div>

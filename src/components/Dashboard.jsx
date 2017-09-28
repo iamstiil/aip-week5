@@ -38,14 +38,13 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="row content-wrapper">
-        <div className="col-12">
+      <div className="row">
+        <div className="col-12 view-menu-wrapper">
           <div className="view-menu float-right">
             <button className="btn btn-outline-primary oi oi-magnifying-glass" />
             <button className="btn btn-outline-primary oi oi-list" />
             <button className="btn btn-outline-primary oi oi-grid-two-up" />
           </div>
-          <h2>Dashboard</h2>
         </div>
         <div className="col-12">
           <div className="row">

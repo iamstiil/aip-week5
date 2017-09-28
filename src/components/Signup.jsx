@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { userSignupRequest } from '../actions';
 import validations from '../shared/validations';
 import InputGroup from './InputGroup';
@@ -70,48 +71,57 @@ class SignUp extends Component {
 
   render() {
     return (
-      <div className="row content-wrapper">
-        <form className="col-4 col-auto mr-auto ml-auto" onSubmit={this.onSubmit}>
-          <h2>Signup</h2>
-          <InputGroup
-            error={this.state.errors.email}
-            field="email"
-            label="Email address"
-            onChange={this.onChange}
-            type="email"
-            value={this.state.email}
-          />
-          <InputGroup
-            error={this.state.errors.username}
-            field="username"
-            label="Username"
-            onChange={this.onChange}
-            type="text"
-            value={this.state.username}
-          />
-          <InputGroup
-            error={this.state.errors.password}
-            field="password"
-            label="Password"
-            onChange={this.onChange}
-            type="password"
-            value={this.state.password}
-          />
-          <InputGroup
-            error={this.state.errors.confirmPassword}
-            field="confirmPassword"
-            label="Confirm Password"
-            onChange={this.onChange}
-            type="password"
-            value={this.state.confirmPassword}
-          />
-          <div className="form-group">
+      <div className="login-panel card mt-5">
+        <div className="card-block p-3">
+          <h3 className="card-title text-center mt-1">Sign Up</h3>
+          <div className="divider mt-0" />
+          <form className="form" onSubmit={this.onSubmit}>
+            <InputGroup
+              error={this.state.errors.email}
+              field="email"
+              label="Email address"
+              onChange={this.onChange}
+              type="email"
+              value={this.state.email}
+            />
+            <InputGroup
+              error={this.state.errors.username}
+              field="username"
+              label="Username"
+              onChange={this.onChange}
+              type="text"
+              value={this.state.username}
+            />
+            <InputGroup
+              error={this.state.errors.password}
+              field="password"
+              label="Password"
+              onChange={this.onChange}
+              type="password"
+              value={this.state.password}
+            />
+            <InputGroup
+              error={this.state.errors.confirmPassword}
+              field="confirmPassword"
+              label="Confirm Password"
+              onChange={this.onChange}
+              type="password"
+              value={this.state.confirmPassword}
+            />
+            <div className="form-group">
+              <button
+                className="btn btn-primary btn-block"
+                disabled={this.state.isLoading}
+              >Sign Up</button>
+            </div>
+          </form>
+          <Link to={'/login'}>
             <button
-              className="btn btn-primary btn-block"
-              disabled={this.state.isLoading}
-            >Sign Up</button>
-          </div>
-        </form>
+              type="button"
+              className="btn btn-secondary btn-block mt-3"
+            >Login</button>
+          </Link>
+        </div>
       </div>
     );
   }

@@ -135,7 +135,7 @@ class EditTask extends Component {
 
   render() {
     return (
-      <div className="row content-wrapper">
+      <div className="row">
         <div
           className="modal fade"
           id="deleteModal"
@@ -164,7 +164,7 @@ class EditTask extends Component {
             </div>
           </div>
         </div>
-        <div className="col-12">
+        <div className="col-12 view-menu-wrapper">
           <div className="view-menu float-right">
             <button
               data-toggle="modal"
@@ -172,7 +172,6 @@ class EditTask extends Component {
               className="btn btn-outline-danger oi oi-trash"
             />
           </div>
-          <h2>Edit task</h2>
         </div>
         {this.state.errors && this.state.errors.default && (
           <div className="col-12">
