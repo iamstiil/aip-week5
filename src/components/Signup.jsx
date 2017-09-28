@@ -70,9 +70,8 @@ class SignUp extends Component {
 
   render() {
     return (
-      <div className="row content-wrapper">
+      <div className="row">
         <form className="col-4 col-auto mr-auto ml-auto" onSubmit={this.onSubmit}>
-          <h2>Signup</h2>
           <InputGroup
             error={this.state.errors.email}
             field="email"

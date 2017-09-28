@@ -77,7 +77,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="row content-wrapper">
+      <div className="row">
         <form className="col-4 col-auto mr-auto ml-auto">
           <InputGroup
             field="email"
