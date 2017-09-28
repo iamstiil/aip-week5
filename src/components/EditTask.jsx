@@ -10,6 +10,7 @@ import InputGroup from './InputGroup';
 import TextAreaGroup from './TextAreaGroup';
 import SelectGroup from './SelectGroup';
 import { deleteTask, deleteTaskRequest, editTask, editTaskRequest } from '../actions';
+import { validateTaskCreation } from '../shared/validations';
 
 /**
  * Component class for editing tasks
@@ -40,6 +41,7 @@ class EditTask extends Component {
     super(props);
 
     this.state = {
+      errors: {},
       isLoading: false,
       popUp: false,
       task: EditTask.getTask(props),
@@ -49,6 +51,7 @@ class EditTask extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.isValid = this.isValid.bind(this);
   }
 
   /**
@@ -118,6 +121,18 @@ class EditTask extends Component {
     $(this.deleteModal).modal('hide');
   }
 
+  /**
+   * Validate Task
+   */
+  isValid(task) {
+    const { errors, isValid } = validateTaskCreation(task);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
+  }
+
   render() {
     return (
       <div className="row content-wrapper">
@@ -169,6 +184,7 @@ class EditTask extends Component {
         {this.state.task && (
           <div className="col-12">
             <InputGroup
+              error={this.state.errors.title}
               field="title"
               label="Title"
               onChange={this.handleChange}
@@ -183,6 +199,7 @@ class EditTask extends Component {
               value={this.state.task.description}
             />
             <SelectGroup
+              error={this.state.user}
               field="user"
               label="User"
               onChange={this.handleChange}
@@ -198,10 +215,12 @@ class EditTask extends Component {
               className="btn btn-primary btn-submit"
               disabled={this.state.isLoading}
               onClick={() => {
-                this.setState({
-                  isLoading: true,
-                });
-                this.handleSave();
+                if (this.isValid(this.state.task)) {
+                  this.setState({
+                    isLoading: true,
+                  });
+                  this.handleSave();
+                }
               }}
             >Save</button>
             <button

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import { userSignupRequest } from '../actions';
-import validateSignupInput from '../shared/validations';
+import validations from '../shared/validations';
 import InputGroup from './InputGroup';
 
 /**
@@ -60,7 +60,7 @@ class SignUp extends Component {
   }
 
   isValid(userData) {
-    const { errors, isValid } = validateSignupInput(userData);
+    const { errors, isValid } = validations.validateSignupInput(userData);
     if (!isValid) {
       this.setState({ errors });
     }

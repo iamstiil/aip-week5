@@ -10,6 +10,7 @@ import TextAreaGroup from './TextAreaGroup';
 import SelectGroup from './SelectGroup';
 import { createTask, createTaskRequest } from '../actions';
 import CustomPropTypes from '../utils/custom-prop-types';
+import { validateTaskCreation } from '../shared/validations';
 import './CreateTask.scss';
 
 /**
@@ -49,6 +50,7 @@ class CreateTask extends Component {
     super(props);
 
     this.state = {
+      errors: {},
       task: {
         title: '',
         description: '',
@@ -59,6 +61,7 @@ class CreateTask extends Component {
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleUserChange = this.handleUserChange.bind(this);
+    this.isValid = this.isValid.bind(this);
   }
 
   /**
@@ -112,6 +115,18 @@ class CreateTask extends Component {
     });
   }
 
+  /**
+   * Validate Task
+   */
+  isValid(task) {
+    const { errors, isValid } = validateTaskCreation(task);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
+  }
+
   render() {
     return (
       <div className="row content-wrapper">
@@ -123,6 +138,7 @@ class CreateTask extends Component {
         </div>
         <div className="col-12">
           <InputGroup
+            error={this.state.errors.title}
             field="task-title"
             label="Title"
             onChange={this.handleTitleChange}
@@ -137,6 +153,7 @@ class CreateTask extends Component {
             value={this.state.task.description}
           />
           <SelectGroup
+            error={this.state.errors.user}
             field="task-user"
             label="User"
             onChange={this.handleUserChange}
@@ -152,22 +169,24 @@ class CreateTask extends Component {
             className="btn btn-primary btn-submit"
             disabled={this.state.isLoading}
             onClick={() => {
-              this.setState({
-                isLoading: true,
-              });
-              this.props.onCreateTaskRequest(this.state.task).then((res) => {
-                if (res.status === 200) {
-                  res.json().then((task) => {
-                    this.props.onCreateTask(task);
-                    this.props.history.push('/');
-                  });
-                } else if (res.status === 400) {
-                  this.setState({
-                    errors: 'Task could not be created! Please try again.',
-                    isLoading: false,
-                  });
-                }
-              });
+              if (this.isValid(this.state.task)) {
+                this.setState({
+                  isLoading: true,
+                });
+                this.props.onCreateTaskRequest(this.state.task).then((res) => {
+                  if (res.status === 200) {
+                    res.json().then((task) => {
+                      this.props.onCreateTask(task);
+                      this.props.history.push('/');
+                    });
+                  } else if (res.status === 400) {
+                    this.setState({
+                      errors: 'Task could not be created! Please try again.',
+                      isLoading: false,
+                    });
+                  }
+                });
+              }
             }}
           >Create</button>
           <button

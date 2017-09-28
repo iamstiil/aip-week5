@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('./db');
-const validateSignupInput = require('../../src/shared/validations');
+const validations = require('../../src/shared/validations');
 
 // Initialize user router
 const router = express.Router();
@@ -69,7 +69,7 @@ router.get('/', (req, res) => {
 // Handle signup
 router.post('/', (req, res) => {
   // Validate input
-  const { errors, isValid } = validateSignupInput(req.body);
+  const { errors, isValid } = validations.validateSignupInput(req.body);
 
   if (isValid) {
     // Extract email, password and username from request body

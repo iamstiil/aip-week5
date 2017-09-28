@@ -1,6 +1,6 @@
 const Validator = require('validator');
 
-module.exports = function validateSignupInput(data) {
+function validateSignupInput(data) {
   const errors = {};
   const { confirmPassword, email, password, username } = data;
 
@@ -36,4 +36,31 @@ module.exports = function validateSignupInput(data) {
     errors,
     isValid: !Object.keys(errors).length,
   };
+}
+
+function validateTaskCreation(task) {
+  const errors = {};
+  const { title, user } = task;
+
+  if (Validator.isEmpty(title)) {
+    errors.title = 'Title is required';
+  }
+
+  if (!Validator.matches(user, /^[a-f\d]{24}$/)) {
+    errors.user = 'User is invalid.';
+  }
+
+  if (Validator.isEmpty(user)) {
+    errors.user = 'User is required';
+  }
+
+  return {
+    errors,
+    isValid: !Object.keys(errors).length,
+  };
+}
+
+module.exports = {
+  validateSignupInput,
+  validateTaskCreation,
 };
