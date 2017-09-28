@@ -23,6 +23,7 @@ function createUser(email, passwordDigest, username) {
     email,
     name: '',
     passwordDigest,
+    role: 'User',
     username,
   });
 }

@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 // Include promise library
 mongoose.Promise = global.Promise;
 
+// User roles
+const ROLES = ['Administrator', 'User'];
+
 /**
  * Mongooses schema for users
  */
@@ -13,6 +16,10 @@ const UserSchema = new mongoose.Schema({
   email: String,
   name: String,
   password_digest: String,
+  role: {
+    enum: ROLES,
+    type: String,
+  },
   username: String,
 });
 
