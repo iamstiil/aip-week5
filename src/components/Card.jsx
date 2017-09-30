@@ -14,7 +14,7 @@ const Card = ({ children, className, link, subtitle, title }) => (
     <div className="card-body">
       <h4 className="card-title">{title}</h4>
       {subtitle && (<h6 className="card-subtitle mb-2 text-muted">{subtitle}</h6>)}
-      <p className="card-text">{children}</p>
+      <div className="card-text">{children}</div>
     </div>
   </div>
 );
@@ -23,7 +23,7 @@ const Card = ({ children, className, link, subtitle, title }) => (
  * PropTypes
  */
 Card.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   className: PropTypes.string,
   link: PropTypes.bool,
   subtitle: PropTypes.string,
