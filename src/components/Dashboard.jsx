@@ -25,7 +25,7 @@ class Dashboard extends Component {
           }
           return (
             <Link key={task.id} to={`/task/${task.id}`}>
-              <Card title={task.title}>{task.description}</Card>
+              <Card title={task.title} link>{task.description}</Card>
             </Link>
           );
         })}
