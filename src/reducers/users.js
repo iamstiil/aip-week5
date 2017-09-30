@@ -1,7 +1,7 @@
 /**
  * Import dependencies
  */
-import { USERS_LOADED } from '../actions/actionTypes';
+import { USERS_LOADED, USER_ROLE_CHANGE } from '../actions/actionTypes';
 
 /**
  * Reducer for users
@@ -21,6 +21,17 @@ function users(state = [], action) {
         return true;
       });
       return res;
+    }
+    case USER_ROLE_CHANGE: {
+      return state.map((user) => {
+        if (user.id === action.user.id) {
+          return {
+            ...user,
+            role: action.user.role,
+          };
+        }
+        return user;
+      });
     }
     default:
       return state;

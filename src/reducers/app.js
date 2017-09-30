@@ -2,7 +2,7 @@
  * Import dependencies
  */
 import jwt from 'jsonwebtoken';
-import { INITIALIZE, USER_LOGGED_IN, USER_LOGGED_OUT } from '../actions/actionTypes';
+import { INITIALIZE, USER_LOGGED_IN, USER_LOGGED_OUT, USER_ROLE_CHANGE } from '../actions/actionTypes';
 
 /**
  * Initial state
@@ -20,11 +20,13 @@ function app(state = initialState, action) {
   switch (action.type) {
     case INITIALIZE: {
       let user = null;
+      let isAdmin = false;
       const token = localStorage.getItem('jwtToken');
       if (token) {
         user = jwt.decode(token);
+        isAdmin = (user.role === 'Administrator');
       }
-      return { ...state, currentUser: user, isAdmin: (user.role === 'Administrator'), isAuthenticated: !!user };
+      return { ...state, currentUser: user, isAdmin, isAuthenticated: !!user };
     }
     case USER_LOGGED_IN: {
       localStorage.setItem('jwtToken', action.token);
@@ -34,6 +36,12 @@ function app(state = initialState, action) {
     case USER_LOGGED_OUT: {
       localStorage.removeItem('jwtToken');
       return { ...state, currentUser: null, isAuthenticated: false, token: null };
+    }
+    case USER_ROLE_CHANGE: {
+      if (state.currentUser.id === action.user.id) {
+        return { ...state, currentUser: action.user, isAdmin: (action.user.role === 'Administrator') };
+      }
+      return state;
     }
     default: {
       return state;

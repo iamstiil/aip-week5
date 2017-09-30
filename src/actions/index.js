@@ -10,6 +10,7 @@ import {
   USERS_LOADED,
   TASKS_LOADED,
   USER_LOGGED_OUT,
+  USER_ROLE_CHANGE,
 } from './actionTypes';
 
 /**
@@ -105,4 +106,19 @@ export function deleteTaskRequest(task) {
       'Content-type': 'application/json',
     },
   });
+}
+
+export function userRoleChangeRequest(user) {
+  // TODO: Refactor into reducer users
+  return () => fetch(`http://localhost:8080/api/user/${user.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  });
+}
+
+export function userRoleChange(user) {
+  return { type: USER_ROLE_CHANGE, user };
 }
