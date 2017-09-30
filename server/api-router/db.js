@@ -22,7 +22,7 @@ function createUser(email, passwordDigest, username) {
   return User.create({
     email,
     name: '',
-    passwordDigest,
+    password_digest: passwordDigest,
     role: 'User',
     username,
   });
