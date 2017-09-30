@@ -78,6 +78,17 @@ function getUserById(id) {
 }
 
 /**
+ * Update user with a specific ID
+ *
+ * @param  {string}  oldUser  User to be replaced
+ * @param  {string}  newUser  User to be inserted
+ * @return  {Promise}  Promise returning updated user or null if not found
+ */
+function updateUserById(oldUser, newUser) {
+  return User.findOneAndUpdate(oldUser, newUser, {new: true}).exec();
+}
+
+/**
  * Create new task
  *
  * @param  {string}  title        Task title
@@ -142,6 +153,7 @@ module.exports = {
   getUsersByUsername,
   getUserByEmail,
   getUserById,
+  updateUserById,
   createTask,
   getTasks,
   getTaskById,
