@@ -24,12 +24,12 @@ function app(state = initialState, action) {
       if (token) {
         user = jwt.decode(token);
       }
-      return { ...state, currentUser: user, isAuthenticated: !!user };
+      return { ...state, currentUser: user, isAdmin: (user.role === 'Administrator'), isAuthenticated: !!user };
     }
     case USER_LOGGED_IN: {
       localStorage.setItem('jwtToken', action.token);
       const user = jwt.decode(action.token);
-      return { ...state, currentUser: user, isAuthenticated: true, token: action.token };
+      return { ...state, currentUser: user, isAdmin: (user.role === 'Administrator'), isAuthenticated: true, token: action.token };
     }
     case USER_LOGGED_OUT: {
       localStorage.removeItem('jwtToken');

@@ -12,7 +12,7 @@ import './App.scss';
 /**
  * Component class for routing
  */
-const App = ({ handleLogout, history, isAuthenticated, route }) => (
+const App = ({ handleLogout, history, isAdmin, isAuthenticated, route }) => (
   <div className="container-fluid" id="wrapper">
     {isAuthenticated && (
       <div className="row">
@@ -75,7 +75,6 @@ const App = ({ handleLogout, history, isAuthenticated, route }) => (
                 aria-labelledby="navbarDropdownMenuLink"
               >
                 <a className="dropdown-item" href="#settings">Settings</a>
-                <Link className="dropdown-item" to={'/admin'}>Administration</Link>
                 <a
                   className="dropdown-item"
                   href="#logout"
@@ -84,6 +83,10 @@ const App = ({ handleLogout, history, isAuthenticated, route }) => (
                     handleLogout(); history.push('/login');
                   }}
                 >Logout</a>
+                {isAdmin && [
+                  <div className="dropdown-divider" key={1} />,
+                  <Link className="dropdown-item" key={2} to={'/admin'}>Administration</Link>,
+                ]}
               </div>
             </div>
           </header>
@@ -106,12 +109,14 @@ App.propTypes = {
   route: PropTypes.object.isRequired,
   handleLogout: PropTypes.func.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default connect(
   state => ({
     isAuthenticated: state.app.isAuthenticated,
+    isAdmin: state.app.isAdmin,
   }),
   dispatch => ({
     handleLogout: () => dispatch(userLoggedOut()),
