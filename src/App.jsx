@@ -1,6 +1,7 @@
 import 'bootstrap';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -74,6 +75,7 @@ const App = ({ handleLogout, history, isAuthenticated, route }) => (
                 aria-labelledby="navbarDropdownMenuLink"
               >
                 <a className="dropdown-item" href="#settings">Settings</a>
+                <Link className="dropdown-item" to={'/admin'}>Administration</Link>
                 <a
                   className="dropdown-item"
                   href="#logout"

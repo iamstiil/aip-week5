@@ -5,6 +5,7 @@ import CreateTask from './components/CreateTask';
 import EditTask from './components/EditTask';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import Administration from './components/Administration';
 
 import requireAuth from './utils/requireAuth';
 
@@ -25,6 +26,11 @@ const routes = [{
       path: '/login',
       exact: true,
       component: Login,
+    },
+    {
+      path: '/admin',
+      exact: true,
+      component: requireAuth(Administration),
     },
     {
       path: '/task/create',
