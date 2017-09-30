@@ -99,6 +99,11 @@ class Login extends Component {
               value={this.state.formData.password}
               error={this.state.error.password}
             />
+            <Link to={'/password-reset'}>
+              <div className="mb-3">
+                <a href="#passwordReset">forgot password?</a>
+              </div>
+            </Link>
             <button
               type="button"
               className="btn btn-primary btn-block"
