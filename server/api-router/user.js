@@ -37,6 +37,8 @@ router.post('/login', (req, res) => {
         // TODO: Refactor secret into seperate config file
         const token = jwt.sign({
           email: response.email,
+          id: response._id,
+          name: response.name,
           role: response.role,
           username: response.username,
         }, 'secretsecretsecretsecret');
@@ -116,6 +118,20 @@ router.get('/:id', (req, res) => {
   // Fetch user with id from database
   db.getUserById(req.param('id')).then((response) => {
     res.json(response);
+  });
+});
+
+// Handle user update by id
+router.put('/:id', (req, res) => {
+  // Fetch user with id from database
+  db.updateUserById({ _id: req.params.id }, req.body).then((response) => {
+    res.json({
+      email: response.email,
+      id: response._id,
+      name: response.name,
+      role: response.role,
+      username: response.username,
+    });
   });
 });
 
