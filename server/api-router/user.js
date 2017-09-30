@@ -37,6 +37,7 @@ router.post('/login', (req, res) => {
         // TODO: Refactor secret into seperate config file
         const token = jwt.sign({
           email: response.email,
+          role: response.role,
           username: response.username,
         }, 'secretsecretsecretsecret');
         res.json({ token });
@@ -58,6 +59,7 @@ router.get('/', (req, res) => {
         id: user._id,
         email: user.email,
         name: user.name,
+        role: user.role,
         username: user.username,
       });
       return user;
