@@ -20,6 +20,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      error: {},
       formData: {
         email: '',
         password: '',
@@ -35,6 +36,9 @@ class Login extends Component {
    * TODO: Refactor
    */
   handleClick() {
+    this.setState({
+      error: {},
+    });
     fetch('http://localhost:8080/api/user/login', {
       method: 'POST',
       headers: {
@@ -43,13 +47,9 @@ class Login extends Component {
       body: JSON.stringify(this.state),
     }).then(response => response.json()).then((body) => {
       if (body.error) {
-        if (body.error.email) {
-          // TODO display error when email not valid
-          console.log(body.error.email);
-        } else if (body.error.password) {
-        // TODO display error when password not valid
-          console.log(body.error.password);
-        }
+        this.setState({
+          error: body.error,
+        });
       } else {
         this.props.userLoggedIn(body.token);
         this.props.history.push('/');
@@ -89,6 +89,7 @@ class Login extends Component {
               onChange={this.handleChange}
               type="email"
               value={this.state.formData.email}
+              error={this.state.error.email}
             />
             <InputGroup
               field="password"
@@ -96,6 +97,7 @@ class Login extends Component {
               onChange={this.handleChange}
               type="password"
               value={this.state.formData.password}
+              error={this.state.error.password}
             />
             <button
               type="button"
