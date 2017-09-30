@@ -20,8 +20,10 @@ router.post('/login', (req, res) => {
   const { email, password } = req.body.formData;
 
   // If variables are empty, there was no input submitted
-  if (!email || !password) {
-    res.status(400).json({ error: { default: 'No input registered. Try again.' } });
+  if (!email) {
+    res.status(400).json({ error: { email: 'Please enter a valid Email address.' } });
+  } else if (!password) {
+    res.status(400).json({ error: { password: 'Please enter a valid Password' } });
   }
 
   // Fetch user from database using email
