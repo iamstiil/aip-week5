@@ -89,6 +89,16 @@ function updateUserById(oldUser, newUser) {
 }
 
 /**
+ * Delete user
+ *
+ * @param  {string}  user  User to be deleted
+ * @return  {Promise}  Promise returning deleted user or null if not found
+ */
+function deleteUserById(user) {
+  return User.findOneAndRemove(user).exec();
+}
+
+/**
  * Create new task
  *
  * @param  {string}  title        Task title
@@ -154,6 +164,7 @@ module.exports = {
   getUserByEmail,
   getUserById,
   updateUserById,
+  deleteUserById,
   createTask,
   getTasks,
   getTaskById,

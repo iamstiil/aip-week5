@@ -137,4 +137,19 @@ router.put('/:id', (req, res) => {
   });
 });
 
+// Handle user deletion by id
+router.delete('/:id', (req, res) => {
+  if (req.params.id === req.body.id) {
+    db.deleteUserById({ _id: req.params.id }).then((response) => {
+      res.json({
+        email: response.email,
+        id: response._id,
+        name: response.name,
+        role: response.role,
+        username: response.username,
+      });
+    });
+  }
+});
+
 module.exports = router;
