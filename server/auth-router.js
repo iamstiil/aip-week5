@@ -52,6 +52,9 @@ router.post('/login', (req, res) => {
   });
 });
 
+/**
+ * Handle signup
+ */
 router.post('/signup', (req, res) => {
   // Validate input
   const { errors, isValid } = validations.validateSignupInput(req.body);

@@ -1,8 +1,8 @@
 /**
  * Import dependencies
  */
-const express = require('express');
 const bodyParser = require('body-parser');
+const express = require('express');
 const db = require('../db');
 
 // Initialize user router
@@ -11,7 +11,9 @@ const router = express.Router();
 // Parse request body stream as json
 router.use(bodyParser.json());
 
-// Handle user list request
+/**
+ * Get list of all users
+ */
 router.get('/', (req, res) => {
   // Fetch user list from database
   db.getUsers().then((response) => {
@@ -31,7 +33,9 @@ router.get('/', (req, res) => {
   });
 });
 
-// Handle user request by id
+/**
+ * Get user
+ */
 router.get('/:id', (req, res) => {
   // Fetch user with id from database
   db.getUserById(req.param('id')).then((response) => {
@@ -39,7 +43,9 @@ router.get('/:id', (req, res) => {
   });
 });
 
-// Handle user update by id
+/**
+ * Update user
+ */
 router.put('/:id', (req, res) => {
   // Fetch user with id from database
   db.updateUserById({ _id: req.params.id }, req.body).then((response) => {
@@ -53,7 +59,9 @@ router.put('/:id', (req, res) => {
   });
 });
 
-// Handle user deletion by id
+/**
+ * Delete user
+ */
 router.delete('/:id', (req, res) => {
   if (req.params.id === req.body.id) {
     db.deleteUserById({ _id: req.params.id }).then((response) => {
@@ -68,4 +76,7 @@ router.delete('/:id', (req, res) => {
   }
 });
 
+/**
+ * Export
+ */
 module.exports = router;
