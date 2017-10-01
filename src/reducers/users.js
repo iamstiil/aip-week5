@@ -1,7 +1,7 @@
 /**
  * Import dependencies
  */
-import { USERS_LOADED, USER_ROLE_CHANGE } from '../actions/actionTypes';
+import { USERS_LOADED, USER_ROLE_CHANGE, USER_DELETE } from '../actions/actionTypes';
 
 /**
  * Reducer for users
@@ -31,6 +31,14 @@ function users(state = [], action) {
           };
         }
         return user;
+      });
+    }
+    case USER_DELETE: {
+      return state.filter((user) => {
+        if (user.id === action.user.id) {
+          return false;
+        }
+        return true;
       });
     }
     default:

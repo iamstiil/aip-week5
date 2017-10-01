@@ -11,6 +11,7 @@ import {
   TASKS_LOADED,
   USER_LOGGED_OUT,
   USER_ROLE_CHANGE,
+  USER_DELETE,
 } from './actionTypes';
 
 /**
@@ -121,4 +122,18 @@ export function userRoleChangeRequest(user) {
 
 export function userRoleChange(user) {
   return { type: USER_ROLE_CHANGE, user };
+}
+
+export function userDeleteRequest(user) {
+  return () => fetch(`http://localhost:8080/api/user/${user.id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  });
+}
+
+export function userDelete(user) {
+  return { type: USER_DELETE, user };
 }

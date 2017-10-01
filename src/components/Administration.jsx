@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import CustomPropTypes from '../utils/custom-prop-types';
 import Card from './Card';
 import SelectGroup from './SelectGroup';
-import { userRoleChange, userRoleChangeRequest } from '../actions';
+import { userDelete, userDeleteRequest, userRoleChange, userRoleChangeRequest } from '../actions';
 
 class Administration extends Component {
   constructor(props) {
@@ -14,6 +14,17 @@ class Administration extends Component {
     };
 
     this.handleRoleChange = this.handleRoleChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleDelete(user) {
+    this.props.userDeleteRequest(user).then((res) => {
+      if (res.status === 200) {
+        res.json().then((oldUser) => {
+          this.props.userDelete(oldUser);
+        });
+      }
+    });
   }
 
   handleRoleChange(user) {
@@ -56,7 +67,7 @@ class Administration extends Component {
               </SelectGroup>
               <div className="col-12 col-lg-6 col-xl-8">
                 <p>Actions</p>
-                <button className="btn btn-sm btn-danger">
+                <button className="btn btn-sm btn-danger" onClick={() => this.handleDelete(user)}>
                   <em className="oi oi-trash" /> Delete
                 </button>
               </div>
@@ -70,6 +81,8 @@ class Administration extends Component {
 
 Administration.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
+  userDelete: PropTypes.func.isRequired,
+  userDeleteRequest: PropTypes.func.isRequired,
   userRoleChange: PropTypes.func.isRequired,
   userRoleChangeRequest: PropTypes.func.isRequired,
   users: CustomPropTypes.users.isRequired,
@@ -81,7 +94,9 @@ export default connect(
     users: state.users,
   }),
   dispatch => ({
-    userRoleChangeRequest: user => dispatch(userRoleChangeRequest(user)),
+    userDelete: user => dispatch(userDelete(user)),
+    userDeleteRequest: user => dispatch(userDeleteRequest(user)),
     userRoleChange: user => dispatch(userRoleChange(user)),
+    userRoleChangeRequest: user => dispatch(userRoleChangeRequest(user)),
   }),
 )(Administration);
