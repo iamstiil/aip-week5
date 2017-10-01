@@ -13,8 +13,15 @@ class Administration extends Component {
       errors: {},
     };
 
-    this.handleRoleChange = this.handleRoleChange.bind(this);
+    this.handleCloseWarning = this.handleCloseWarning.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleRoleChange = this.handleRoleChange.bind(this);
+  }
+
+  handleCloseWarning() {
+    this.setState({
+      errors: {},
+    });
   }
 
   handleDelete(user) {
@@ -22,6 +29,12 @@ class Administration extends Component {
       if (res.status === 200) {
         res.json().then((oldUser) => {
           this.props.userDelete(oldUser);
+        });
+      } else {
+        this.setState({
+          errors: {
+            default: 'User could not be deleted. Please try again.',
+          },
         });
       }
     });
@@ -32,6 +45,12 @@ class Administration extends Component {
       if (res.status === 200) {
         res.json().then((newUser) => {
           this.props.userRoleChange(newUser);
+        });
+      } else {
+        this.setState({
+          errors: {
+            default: 'User role could not be changed. Please try again.',
+          },
         });
       }
     });
@@ -48,6 +67,19 @@ class Administration extends Component {
     }
     return (
       <div>
+        {this.state.errors.default && (
+          <div className="alert alert-warning alert-dismissible" role="alert">
+            <button
+              aria-label="Close"
+              className="close"
+              onClick={this.handleCloseWarning}
+              type="button"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {this.state.errors.default}
+          </div>
+        )}
         <h3>Users</h3>
         {this.props.users.map(user => (
           <Card key={user.username} subtitle={user.email} title={user.username}>
