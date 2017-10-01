@@ -2,8 +2,8 @@
  * Import dependencies
  */
 const mongoose = require('mongoose');
-const User = require('../models/User');
-const Task = require('../models/Task');
+const User = require('./models/User');
+const Task = require('./models/Task');
 
 /**
  * Connect to MongoDB

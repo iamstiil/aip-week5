@@ -39,7 +39,7 @@ class Login extends Component {
     this.setState({
       error: {},
     });
-    fetch('http://localhost:8080/api/user/login', {
+    fetch('http://localhost:8080/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
