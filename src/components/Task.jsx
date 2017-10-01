@@ -2,9 +2,9 @@
  * Import dependencies
  */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { connect } from 'react-redux';
 import CustomPropTypes from '../utils/custom-prop-types';
 
 /**

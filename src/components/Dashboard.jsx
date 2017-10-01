@@ -2,8 +2,8 @@
  * Import dependencies
  */
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Card from './Card';
 import CustomPropTypes from '../utils/custom-prop-types';
 import './Dashboard.scss';

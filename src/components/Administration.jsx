@@ -1,12 +1,26 @@
+/**
+ * Import dependencies
+ */
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import CustomPropTypes from '../utils/custom-prop-types';
+import {
+  userDelete,
+  userDeleteRequest,
+  userRoleChange,
+  userRoleChangeRequest,
+} from '../actions';
 import Card from './Card';
+import CustomPropTypes from '../utils/custom-prop-types';
 import SelectGroup from './SelectGroup';
-import { userDelete, userDeleteRequest, userRoleChange, userRoleChangeRequest } from '../actions';
 
+/**
+ * Class component for administration
+ */
 class Administration extends Component {
+  /**
+   * Constructor
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -18,12 +32,18 @@ class Administration extends Component {
     this.handleRoleChange = this.handleRoleChange.bind(this);
   }
 
+  /**
+   * Handle closing of warning messages
+   */
   handleCloseWarning() {
     this.setState({
       errors: {},
     });
   }
 
+  /**
+   * Handle user deletion
+   */
   handleDelete(user) {
     this.props.userDeleteRequest(user).then((res) => {
       if (res.status === 200) {
@@ -40,6 +60,9 @@ class Administration extends Component {
     });
   }
 
+  /**
+   * Handle user role change
+   */
   handleRoleChange(user) {
     this.props.userRoleChangeRequest(user).then((res) => {
       if (res.status === 200) {
@@ -111,6 +134,9 @@ class Administration extends Component {
   }
 }
 
+/**
+ * PropTypes
+ */
 Administration.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   userDelete: PropTypes.func.isRequired,
@@ -120,6 +146,9 @@ Administration.propTypes = {
   users: CustomPropTypes.users.isRequired,
 };
 
+/**
+ * Connect Redux with Component
+ */
 export default connect(
   state => ({
     isAdmin: state.app.isAdmin,
