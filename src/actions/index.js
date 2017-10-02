@@ -18,11 +18,23 @@ import {
  * Helper Functions
  */
 function fetchUsers() {
-  return fetch('http://localhost:8080/api/user').then(response => response.json());
+  const token = localStorage.getItem('jwtToken');
+  return fetch('http://localhost:8080/api/user', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json());
 }
 
 function fetchTasks() {
-  return fetch('http://localhost:8080/api/task').then(response => response.json());
+  const token = localStorage.getItem('jwtToken');
+  return fetch('http://localhost:8080/api/task', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(response => response.json());
 }
 
 /**
@@ -58,9 +70,11 @@ export function userSignupRequest(userData) {
 }
 
 export function createTaskRequest(task) {
+  const token = localStorage.getItem('jwtToken');
   return () => fetch('http://localhost:8080/api/task', {
     method: 'POST',
     headers: {
+      Authorization: `Bearer ${token}`,
       'Content-type': 'application/json',
     },
     body: JSON.stringify(task),
@@ -69,10 +83,10 @@ export function createTaskRequest(task) {
 
 export function userLoggedIn(token) {
   return (dispatch) => {
+    dispatch({ type: USER_LOGGED_IN, token });
     fetchUsers().then((users) => {
       dispatch({ type: USERS_LOADED, users });
     });
-    dispatch({ type: USER_LOGGED_IN, token });
   };
 }
 
@@ -87,9 +101,11 @@ export function editTask(task) {
 }
 
 export function editTaskRequest(task) {
+  const token = localStorage.getItem('jwtToken');
   return () => fetch(`http://localhost:8080/api/task/${task.id}`, {
     method: 'PUT',
     headers: {
+      Authorization: `Bearer ${token}`,
       'Content-type': 'application/json',
     },
     body: JSON.stringify(task),
@@ -101,19 +117,22 @@ export function deleteTask(task) {
 }
 
 export function deleteTaskRequest(task) {
+  const token = localStorage.getItem('jwtToken');
   return () => fetch(`http://localhost:8080/api/task/${task.id}`, {
     method: 'DELETE',
     headers: {
+      Authorization: `Bearer ${token}`,
       'Content-type': 'application/json',
     },
   });
 }
 
 export function userRoleChangeRequest(user) {
-  // TODO: Refactor into reducer users
+  const token = localStorage.getItem('jwtToken');
   return () => fetch(`http://localhost:8080/api/user/${user.id}`, {
     method: 'PUT',
     headers: {
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(user),
@@ -125,9 +144,11 @@ export function userRoleChange(user) {
 }
 
 export function userDeleteRequest(user) {
+  const token = localStorage.getItem('jwtToken');
   return () => fetch(`http://localhost:8080/api/user/${user.id}`, {
     method: 'DELETE',
     headers: {
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(user),
