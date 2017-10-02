@@ -2,8 +2,8 @@
  * Import dependencies
  */
 const mongoose = require('mongoose');
-const User = require('../models/User');
-const Task = require('../models/Task');
+const User = require('./models/User');
+const Task = require('./models/Task');
 
 /**
  * Connect to MongoDB
@@ -22,7 +22,8 @@ function createUser(email, passwordDigest, username) {
   return User.create({
     email,
     name: '',
-    passwordDigest,
+    password_digest: passwordDigest,
+    role: 'User',
     username,
   });
 }
@@ -74,6 +75,27 @@ function getUserByEmail(email) {
  */
 function getUserById(id) {
   return User.findById(id).exec();
+}
+
+/**
+ * Update user with a specific ID
+ *
+ * @param  {string}  oldUser  User to be replaced
+ * @param  {string}  newUser  User to be inserted
+ * @return  {Promise}  Promise returning updated user or null if not found
+ */
+function updateUserById(oldUser, newUser) {
+  return User.findOneAndUpdate(oldUser, newUser, {new: true}).exec();
+}
+
+/**
+ * Delete user
+ *
+ * @param  {string}  user  User to be deleted
+ * @return  {Promise}  Promise returning deleted user or null if not found
+ */
+function deleteUserById(user) {
+  return User.findOneAndRemove(user).exec();
 }
 
 /**
@@ -141,6 +163,8 @@ module.exports = {
   getUsersByUsername,
   getUserByEmail,
   getUserById,
+  updateUserById,
+  deleteUserById,
   createTask,
   getTasks,
   getTaskById,

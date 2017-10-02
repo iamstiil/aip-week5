@@ -6,6 +6,8 @@ import EditTask from './components/EditTask';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import PasswordReset from './components/PasswordReset';
+import Administration from './components/Administration';
+
 
 import requireAuth from './utils/requireAuth';
 
@@ -31,6 +33,11 @@ const routes = [{
       path: '/password-reset',
       exact: true,
       component: PasswordReset,
+    },
+    {
+      path: '/admin',
+      exact: true,
+      component: requireAuth(Administration),
     },
     {
       path: '/task/create',

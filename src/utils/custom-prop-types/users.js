@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types';
+import user from './user';
 
-const users = PropTypes.arrayOf(
-  PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string,
-  }),
-);
+const users = PropTypes.arrayOf(user);
 
 export default users;

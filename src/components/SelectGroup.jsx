@@ -1,15 +1,15 @@
 /**
  * Import dependencies
  */
-import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 /**
  * Component class for select fields
  */
-const SelectGroup = ({ children, error, field, label, onChange, value }) => (
-  <div className="form-group">
+const SelectGroup = ({ children, className, error, field, label, onChange, value }) => (
+  <div className={classnames('form-group', className)}>
     <label htmlFor={field}>{label}</label>
     <select
       className={classnames('form-control', {
@@ -35,6 +35,7 @@ SelectGroup.propTypes = {
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
   ]).isRequired,
+  className: PropTypes.string,
   error: PropTypes.string,
   field: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
@@ -49,6 +50,7 @@ SelectGroup.propTypes = {
  * DefaultProps
  */
 SelectGroup.defaultProps = {
+  className: '',
   error: '',
 };
 

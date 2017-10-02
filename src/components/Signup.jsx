@@ -1,19 +1,22 @@
 /**
  * Import dependencies
  */
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { userSignupRequest } from '../actions';
-import validations from '../shared/validations';
 import InputGroup from './InputGroup';
+import validations from '../shared/validations';
 
 /**
  * Component class for SignUp
  */
 class SignUp extends Component {
+  /**
+   * Constructor
+   */
   constructor(props) {
     super(props);
 
@@ -30,10 +33,16 @@ class SignUp extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  /**
+   * Handle changes on inputs
+   */
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  /**
+   * Handle form submission
+   */
   onSubmit(e) {
     e.preventDefault();
     const userData = {
@@ -60,6 +69,9 @@ class SignUp extends Component {
     }
   }
 
+  /**
+   * Check if form fields are valid
+   */
   isValid(userData) {
     const { errors, isValid } = validations.validateSignupInput(userData);
     if (!isValid) {

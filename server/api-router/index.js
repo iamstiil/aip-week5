@@ -2,16 +2,16 @@
  * Import dependencies
  */
 const express = require('express');
-const userRouter = require('./user');
 const taskRouter = require('./task');
+const userRouter = require('./user');
 
 // Create API router
 const router = express.Router();
 
-// include user API
-router.use('/user', userRouter);
 // include task API
 router.use('/task', taskRouter);
+// include user API
+router.use('/user', userRouter);
 
 /**
  * Export

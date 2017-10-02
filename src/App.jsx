@@ -1,9 +1,11 @@
 import 'bootstrap';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import CustomPropTypes from './utils/custom-prop-types';
 import { userLoggedOut } from './actions';
 
 import './App.scss';
@@ -11,7 +13,7 @@ import './App.scss';
 /**
  * Component class for routing
  */
-const App = ({ handleLogout, history, isAuthenticated, route }) => (
+const App = ({ currentUser, handleLogout, history, isAdmin, isAuthenticated, route }) => (
   <div className="container-fluid" id="wrapper">
     {isAuthenticated && (
       <div className="row">
@@ -65,8 +67,8 @@ const App = ({ handleLogout, history, isAuthenticated, route }) => (
                   height={50}
                 />
                 <div className="username mt-1">
-                  <h4 className="mb-1">Username</h4>
-                  <h6 className="text-muted">Admin</h6>
+                  <h4 className="mb-1">{currentUser.username}</h4>
+                  <h6 className="text-muted">{currentUser.role}</h6>
                 </div>
               </a>
               <div
@@ -82,6 +84,10 @@ const App = ({ handleLogout, history, isAuthenticated, route }) => (
                     handleLogout(); history.push('/login');
                   }}
                 >Logout</a>
+                {isAdmin && [
+                  <div className="dropdown-divider" key={1} />,
+                  <Link className="dropdown-item" key={2} to={'/admin'}>Administration</Link>,
+                ]}
               </div>
             </div>
           </header>
@@ -104,12 +110,16 @@ App.propTypes = {
   route: PropTypes.object.isRequired,
   handleLogout: PropTypes.func.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
+  currentUser: CustomPropTypes.user.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default connect(
   state => ({
+    currentUser: state.app.currentUser,
     isAuthenticated: state.app.isAuthenticated,
+    isAdmin: state.app.isAdmin,
   }),
   dispatch => ({
     handleLogout: () => dispatch(userLoggedOut()),

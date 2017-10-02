@@ -1,15 +1,15 @@
 /**
  * Import dependencies
  */
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import InputGroup from './InputGroup';
-import TextAreaGroup from './TextAreaGroup';
-import SelectGroup from './SelectGroup';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { createTask, createTaskRequest } from '../actions';
 import CustomPropTypes from '../utils/custom-prop-types';
+import InputGroup from './InputGroup';
+import SelectGroup from './SelectGroup';
+import TextAreaGroup from './TextAreaGroup';
 import { validateTaskCreation } from '../shared/validations';
 import './CreateTask.scss';
 

@@ -1,14 +1,14 @@
 /**
  * Import dependencies
  */
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { userLoggedIn } from '../actions';
-import './Login.scss';
 import InputGroup from './InputGroup';
+import './Login.scss';
 
 /**
  * Component class for Login
@@ -39,7 +39,7 @@ class Login extends Component {
     this.setState({
       error: {},
     });
-    fetch('http://localhost:8080/api/user/login', {
+    fetch('http://localhost:8080/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

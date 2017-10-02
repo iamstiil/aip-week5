@@ -10,6 +10,8 @@ import {
   USERS_LOADED,
   TASKS_LOADED,
   USER_LOGGED_OUT,
+  USER_ROLE_CHANGE,
+  USER_DELETE,
 } from './actionTypes';
 
 /**
@@ -46,7 +48,7 @@ export function initializeApp() {
 
 export function userSignupRequest(userData) {
   // TODO: Refactor into reducer users
-  return () => fetch('http://localhost:8080/api/user', {
+  return () => fetch('http://localhost:8080/auth/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -105,4 +107,33 @@ export function deleteTaskRequest(task) {
       'Content-type': 'application/json',
     },
   });
+}
+
+export function userRoleChangeRequest(user) {
+  // TODO: Refactor into reducer users
+  return () => fetch(`http://localhost:8080/api/user/${user.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  });
+}
+
+export function userRoleChange(user) {
+  return { type: USER_ROLE_CHANGE, user };
+}
+
+export function userDeleteRequest(user) {
+  return () => fetch(`http://localhost:8080/api/user/${user.id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  });
+}
+
+export function userDelete(user) {
+  return { type: USER_DELETE, user };
 }

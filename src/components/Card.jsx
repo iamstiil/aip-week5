@@ -1,18 +1,20 @@
 /**
  * Import dependencies
  */
-import React from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import React from 'react';
 import './Card.scss';
 
 /**
  * Component Class for Cards
  */
-const Card = ({ children, title }) => (
-  <div className="card mb-3" role="link" tabIndex={0}>
+const Card = ({ children, className, link, subtitle, title }) => (
+  <div className={classnames('card mb-3', className)} {...link && { role: 'link' }}>
     <div className="card-body">
       <h4 className="card-title">{title}</h4>
-      <p className="card-text">{children}</p>
+      {subtitle && (<h6 className="card-subtitle mb-2 text-muted">{subtitle}</h6>)}
+      <div className="card-text">{children}</div>
     </div>
   </div>
 );
@@ -21,8 +23,20 @@ const Card = ({ children, title }) => (
  * PropTypes
  */
 Card.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+  className: PropTypes.string,
+  link: PropTypes.bool,
+  subtitle: PropTypes.string,
   title: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
+};
+
+/**
+ * Default props
+ */
+Card.defaultProps = {
+  className: '',
+  link: false,
+  subtitle: '',
 };
 
 /**

@@ -2,8 +2,8 @@
  * Import dependencies
  */
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Card from './Card';
 import CustomPropTypes from '../utils/custom-prop-types';
 import './Dashboard.scss';
@@ -25,7 +25,7 @@ class Dashboard extends Component {
           }
           return (
             <Link key={task.id} to={`/task/${task.id}`}>
-              <Card title={task.title}>{task.description}</Card>
+              <Card title={task.title} link>{task.description}</Card>
             </Link>
           );
         })}

@@ -3,6 +3,7 @@
  */
 const express = require('express');
 const apiRouter = require('./api-router');
+const authRouter = require('./auth-router');
 
 // Initialize express app
 const app = express();
@@ -14,6 +15,8 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+// Add authentication router
+app.use('/auth', authRouter);
 // Add API router
 app.use('/api', apiRouter);
 // Add built react frontend

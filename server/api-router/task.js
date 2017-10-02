@@ -1,9 +1,9 @@
 /**
  * Import dependencies
  */
-const express = require('express');
 const bodyParser = require('body-parser');
-const db = require('./db');
+const express = require('express');
+const db = require('../db');
 
 // Initialize user router
 const router = express.Router();
@@ -11,6 +11,9 @@ const router = express.Router();
 // Parse request body stream as json
 router.use(bodyParser.json());
 
+/**
+ * Get list of all tasks
+ */
 router.get('/', (req, res) => {
   // Fetch task list from database
   db.getTasks().then((response) => {
@@ -29,6 +32,9 @@ router.get('/', (req, res) => {
   });
 });
 
+/**
+ * Create new task
+ */
 router.post('/', (req, res) => {
   const { title, description, user } = req.body;
 
@@ -50,6 +56,9 @@ router.post('/', (req, res) => {
   });
 });
 
+/**
+ * Update task
+ */
 router.put('/:taskid', (req, res) => {
   const taskid = req.params.taskid;
   if (!/^[a-f\d]{24}$/.test(taskid)) {
@@ -80,6 +89,9 @@ router.put('/:taskid', (req, res) => {
   });
 });
 
+/**
+ * Delete Task
+ */
 router.delete('/:taskid', (req, res) => {
   const taskid = req.params.taskid;
   db.deleteTask(taskid).then((task) => {
@@ -93,4 +105,7 @@ router.delete('/:taskid', (req, res) => {
   });
 });
 
+/**
+ * Export
+ */
 module.exports = router;
