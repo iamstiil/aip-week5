@@ -111,6 +111,29 @@ router.post('/signup', (req, res) => {
   }
 });
 
+function sendResetMail(email, res, id) {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'homizemailservice@gmail.com',
+      pass: 'aip_homize17',
+    },
+  });
+  transporter.sendMail({
+    from: 'password-reset@homize.com',
+    to: email,
+    subject: '[Homize] Password Reset',
+    text: `Please visit the following link to reset your password: http://localhost:3000/password-recovery/${id}`,
+    html: `Please visit the following link to reset your password: <a href="http://localhost:3000/password-recovery/${id}">http://localhost:3000/password-recovery/${id}</a>`,
+  }, (error) => {
+    if (error) {
+      res.status(400).json({ error: 'error while sending Email' });
+    } else {
+      res.json({ success: true });
+    }
+  });
+}
+
 /**
  * Handle Password Reset
  */
@@ -118,25 +141,17 @@ router.post('/password-reset', (req, res) => {
   const { email } = req.body;
   db.getUserByEmail(email).then((user) => {
     if (user !== null) {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'homizemailservice@gmail.com',
-          pass: 'aip_homize17',
-        },
-      });
-      transporter.sendMail({
-        from: 'password-reset@homize.com',
-        to: email,
-        subject: '[Homize] Password Reset',
-        text: 'Please visit the following link to reset your password: http://localhost:3000/password-recovery',
-        html: 'Please visit the following link to reset your password: ' +
-        '<a href="http://localhost:3000/password-recovery">http://localhost:3000/password-recovery</a>',
-      }, (error, info) => {
-        if (error) {
-          res.status(400).json({});
+      db.getRecoveryByUser(user).then((recovery) => {
+        if (recovery !== null) {
+          sendResetMail(email, res, recovery._id);
         } else {
-          console.log(info);
+          db.createRecovery(user).then((newRecovery) => {
+            if (newRecovery !== null) {
+              sendResetMail(email, res, newRecovery._id);
+            } else {
+              res.status(500).json({ error: 'Email could not be sent' });
+            }
+          });
         }
       });
     } else {

@@ -2,8 +2,9 @@
  * Import dependencies
  */
 const mongoose = require('mongoose');
-const User = require('./models/User');
+const Recovery = require('./models/Recovery');
 const Task = require('./models/Task');
+const User = require('./models/User');
 
 /**
  * Connect to MongoDB
@@ -154,6 +155,18 @@ function deleteTask(taskid) {
 }
 
 /**
+ * Create password recovery for user
+ * @param  {string}  user
+ * @return  {Promise}  Promise returning created recovery object
+ */
+function createRecovery(user) {
+  return Recovery.create({ user });
+}
+
+function getRecoveryByUser(user) {
+  return Recovery.findOne({ user }).exec();
+}
+/**
  * Export
  */
 module.exports = {
@@ -170,4 +183,6 @@ module.exports = {
   getTaskById,
   updateTask,
   deleteTask,
+  createRecovery,
+  getRecoveryByUser,
 };
