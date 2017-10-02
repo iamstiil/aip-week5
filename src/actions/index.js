@@ -137,3 +137,13 @@ export function userDeleteRequest(user) {
 export function userDelete(user) {
   return { type: USER_DELETE, user };
 }
+
+export function passwordResetRequest(email) {
+  return () => fetch('http://localhost:8080/auth/password-reset', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  });
+}

@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { passwordResetRequest } from '../actions';
 import InputGroup from './InputGroup';
 
 /**
@@ -17,12 +20,13 @@ class PasswordReset extends Component {
   }
 
   handleSubmit(e) {
-    console.log(e, this);
+    e.preventDefault();
+    this.props.passwordResetRequest(this.state.email).then((res) => {
+      console.log(res.json());
+    });
   }
   handleChange(e) {
-    const { formData } = this.state;
-    formData[event.target.name] = e.target.value;
-    this.setState({ formData });
+    this.setState({ email: e.target.value });
   }
 
   render() {
@@ -38,6 +42,7 @@ class PasswordReset extends Component {
               onChange={this.handleChange}
               type="email"
               value={this.state.email}
+              required
             />
             <button
               className="btn btn-primary btn-block"
@@ -53,6 +58,13 @@ class PasswordReset extends Component {
  * PropTypes
  */
 PasswordReset.propTypes = {
+  passwordResetRequest: PropTypes.func.isRequired,
 };
 
-export default PasswordReset;
+export default connect(
+  null,
+  dispatch => ({
+    passwordResetRequest: email => dispatch(passwordResetRequest(email)),
+  }),
+)(PasswordReset);
+

@@ -5,11 +5,25 @@ const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+const SmtpServer = require('smtp-server').SMTPServer;
 const db = require('./db');
 const validations = require('../src/shared/validations');
 
 // Create authentication router
 const router = express.Router();
+
+// Create SMTP server
+const smtp = new SmtpServer({
+  onAuth(auth, session, callback) {
+    console.log(auth, session);
+    if (auth.username !== 'admin' || auth.password !== 'adminadmin') {
+      return callback(new Error('Invalid username or password'));
+    }
+    return callback(null, { user: 'admin' });
+  },
+});
+smtp.listen(25);
 
 // Parse request body stream as json
 router.use(bodyParser.json());
@@ -95,6 +109,40 @@ router.post('/signup', (req, res) => {
   } else {
     res.status(400).json(errors);
   }
+});
+
+/**
+ * Handle Password Reset
+ */
+router.post('/password-reset', (req, res) => {
+  const { email } = req.body;
+  db.getUserByEmail(email).then((user) => {
+    if (user !== null) {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'homizemailservice@gmail.com',
+          pass: 'aip_homize17',
+        },
+      });
+      transporter.sendMail({
+        from: 'password-reset@homize.com',
+        to: email,
+        subject: '[Homize] Password Reset',
+        text: 'Please visit the following link to reset your password: http://localhost:3000/password-recovery',
+        html: 'Please visit the following link to reset your password: ' +
+        '<a href="http://localhost:3000/password-recovery">http://localhost:3000/password-recovery</a>',
+      }, (error, info) => {
+        if (error) {
+          res.status(400).json({});
+        } else {
+          console.log(info);
+        }
+      });
+    } else {
+      res.status(400).json({ error: 'Email is not registered' });
+    }
+  });
 });
 
 /**
