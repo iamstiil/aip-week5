@@ -19,6 +19,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
       filterOpen: false,
       visibleTasks: props.tasks,
     };
