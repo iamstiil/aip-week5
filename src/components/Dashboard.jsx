@@ -66,10 +66,14 @@ class Dashboard extends Component {
    */
   filterTasks(event) {
     const tasks = this.props.tasks.filter((task) => {
-      if (task.title.indexOf(event.target.value) !== -1) {
+      const value = event.target.value.toLowerCase();
+      const title = task.title.toLowerCase();
+      const description = task.description.toLowerCase();
+
+      if (title.indexOf(value) !== -1) {
         return true;
       }
-      if (task.description.indexOf(event.target.value) !== -1) {
+      if (description.indexOf(value) !== -1) {
         return true;
       }
       return false;
