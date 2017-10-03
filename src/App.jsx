@@ -13,7 +13,7 @@ import './App.scss';
 /**
  * Component class for routing
  */
-const App = ({ currentUser, handleLogout, history, isAdmin, isAuthenticated, route }) => (
+const App = ({ currentUser, handleLogout, history, isAdmin, isAuthenticated, route, title }) => (
   <div className="container-fluid" id="wrapper">
     {isAuthenticated && (
       <div className="row">
@@ -33,7 +33,7 @@ const App = ({ currentUser, handleLogout, history, isAdmin, isAuthenticated, rou
         <main className="col-12 col-sm-8 col-lg-9 col-xl-10 pt-3 pl-4 ml-auto">
           <header className="page-header row justify-center">
             <div className="col-md-6 col-lg-8">
-              <h1 className="float-left text-center text-md-left">Dashboard</h1>
+              <h1 className="float-left text-center text-md-left">{title}</h1>
             </div>
             <div
               className="dropdown user-dropdown col-md-6 col-lg-4 text-center text-md-right"
@@ -98,6 +98,7 @@ App.propTypes = {
   currentUser: CustomPropTypes.user.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default connect(
@@ -105,6 +106,7 @@ export default connect(
     currentUser: state.app.currentUser,
     isAuthenticated: state.app.isAuthenticated,
     isAdmin: state.app.isAdmin,
+    title: state.app.title,
   }),
   dispatch => ({
     handleLogout: () => dispatch(userLoggedOut()),

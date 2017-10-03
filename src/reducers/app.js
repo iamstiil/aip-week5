@@ -2,7 +2,7 @@
  * Import dependencies
  */
 import jwt from 'jsonwebtoken';
-import { INITIALIZE, USER_LOGGED_IN, USER_LOGGED_OUT, USER_ROLE_CHANGE } from '../actions/actionTypes';
+import { INITIALIZE, USER_LOGGED_IN, USER_LOGGED_OUT, USER_ROLE_CHANGE, CHANGE_TITLE } from '../actions/actionTypes';
 
 /**
  * Initial state
@@ -10,6 +10,7 @@ import { INITIALIZE, USER_LOGGED_IN, USER_LOGGED_OUT, USER_ROLE_CHANGE } from '.
 const initialState = {
   currentUser: null,
   isAuthenticated: false,
+  title: 'Dashboard',
   token: null,
 };
 
@@ -42,6 +43,9 @@ function app(state = initialState, action) {
         return { ...state, currentUser: action.user, isAdmin: (action.user.role === 'Administrator') };
       }
       return state;
+    }
+    case CHANGE_TITLE: {
+      return { ...state, title: action.title };
     }
     default: {
       return state;

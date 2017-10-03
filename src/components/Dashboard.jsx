@@ -2,9 +2,11 @@
  * Import dependencies
  */
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { changeTitle } from '../actions';
 import Card from './Card';
 import CustomPropTypes from '../utils/custom-prop-types';
 import './Dashboard.scss';
@@ -31,6 +33,10 @@ class Dashboard extends Component {
   /**
    * React lifecycle methods
    */
+  componentDidMount() {
+    this.props.changeTitle('Dashboard');
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({
       visibleTasks: nextProps.tasks,
@@ -125,6 +131,7 @@ class Dashboard extends Component {
  * PropTypes
  */
 Dashboard.propTypes = {
+  changeTitle: PropTypes.func.isRequired,
   users: CustomPropTypes.users.isRequired,
   tasks: CustomPropTypes.tasks.isRequired,
 };
@@ -136,5 +143,8 @@ export default connect(
   state => ({
     users: state.users,
     tasks: state.tasks,
+  }),
+  dispatch => ({
+    changeTitle: title => dispatch(changeTitle(title)),
   }),
 )(Dashboard);

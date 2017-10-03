@@ -12,6 +12,7 @@ import {
   USER_LOGGED_OUT,
   USER_ROLE_CHANGE,
   USER_DELETE,
+  CHANGE_TITLE,
 } from './actionTypes';
 
 /**
@@ -167,4 +168,8 @@ export function passwordResetRequest(email) {
     },
     body: JSON.stringify({ email }),
   });
+}
+
+export function changeTitle(title) {
+  return { type: CHANGE_TITLE, title };
 }

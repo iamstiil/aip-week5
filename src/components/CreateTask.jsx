@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { createTask, createTaskRequest } from '../actions';
+import { changeTitle, createTask, createTaskRequest } from '../actions';
 import CustomPropTypes from '../utils/custom-prop-types';
 import InputGroup from './InputGroup';
 import SelectGroup from './SelectGroup';
@@ -67,6 +67,10 @@ class CreateTask extends Component {
   /**
    * React lifecycle methods
    */
+  componentDidMount() {
+    this.props.changeTitle('Create Task');
+  }
+
   componentWillReceiveProps(nextProps) {
     const userid = CreateTask.getUser(nextProps);
 
@@ -202,6 +206,7 @@ class CreateTask extends Component {
  * PropTypes
  */
 CreateTask.propTypes = {
+  changeTitle: PropTypes.func.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   onCreateTask: PropTypes.func.isRequired,
   onCreateTaskRequest: PropTypes.func.isRequired,
@@ -216,6 +221,7 @@ export default connect(
     users: state.users,
   }),
   dispatch => ({
+    changeTitle: title => dispatch(changeTitle(title)),
     onCreateTask: task => dispatch(createTask(task)),
     onCreateTaskRequest: task => dispatch(createTaskRequest(task)),
   }),

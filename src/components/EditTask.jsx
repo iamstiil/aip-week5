@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import {
+  changeTitle,
   deleteTask,
   deleteTaskRequest,
   editTask,
@@ -62,6 +63,10 @@ class EditTask extends Component {
   /**
    * React lifecycle methods
    */
+  componentDidMount() {
+    this.props.changeTitle('Edit Task');
+  }
+
   componentWillReceiveProps(nextProps) {
     const task = EditTask.getTask(nextProps);
 
@@ -242,6 +247,7 @@ class EditTask extends Component {
  * PropTypes
  */
 EditTask.propTypes = {
+  changeTitle: PropTypes.func.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   onDeleteTask: PropTypes.func.isRequired,
   onDeleteTaskRequest: PropTypes.func.isRequired,
@@ -259,6 +265,7 @@ export default connect(
     users: state.users,
   }),
   dispatch => ({
+    changeTitle: title => dispatch(changeTitle(title)),
     onDeleteTask: task => dispatch(deleteTask(task)),
     onDeleteTaskRequest: task => dispatch(deleteTaskRequest(task)),
     onEditTask: task => dispatch(editTask(task)),

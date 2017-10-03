@@ -1,16 +1,25 @@
 /**
  * Import dependencies
  */
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import { changeTitle } from '../actions';
 import CustomPropTypes from '../utils/custom-prop-types';
 
 /**
  * Component class displaying a single task
  */
 class Task extends Component {
+  /**
+   * React lifecycle methods
+   */
+  componentDidMount() {
+    this.props.changeTitle('Task');
+  }
+
   /**
    * Get user for current path
    */
@@ -72,6 +81,7 @@ class Task extends Component {
  * PropTypes
  */
 Task.propTypes = {
+  changeTitle: PropTypes.func.isRequired,
   users: CustomPropTypes.users.isRequired,
   tasks: CustomPropTypes.tasks.isRequired,
   match: ReactRouterPropTypes.match.isRequired,
@@ -84,5 +94,8 @@ export default connect(
   state => ({
     users: state.users,
     tasks: state.tasks,
+  }),
+  dispatch => ({
+    changeTitle: title => dispatch(changeTitle(title)),
   }),
 )(Task);

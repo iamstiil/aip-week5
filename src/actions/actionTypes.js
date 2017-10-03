@@ -11,3 +11,4 @@ export const TASKS_LOADED = 'TASKS_LOADED';
 export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 export const USER_ROLE_CHANGE = 'USER_ROLE_CHANGE';
 export const USER_DELETE = 'USER_DELETE';
+export const CHANGE_TITLE = 'CHANGE_TITLE';

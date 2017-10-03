@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
+  changeTitle,
   userDelete,
   userDeleteRequest,
   userRoleChange,
@@ -30,6 +31,13 @@ class Administration extends Component {
     this.handleCloseWarning = this.handleCloseWarning.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleRoleChange = this.handleRoleChange.bind(this);
+  }
+
+  /**
+   * React lifecycle methods
+   */
+  componentDidMount() {
+    this.props.changeTitle('Administration');
   }
 
   /**
@@ -138,6 +146,7 @@ class Administration extends Component {
  * PropTypes
  */
 Administration.propTypes = {
+  changeTitle: PropTypes.func.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   userDelete: PropTypes.func.isRequired,
   userDeleteRequest: PropTypes.func.isRequired,
@@ -155,6 +164,7 @@ export default connect(
     users: state.users,
   }),
   dispatch => ({
+    changeTitle: title => dispatch(changeTitle(title)),
     userDelete: user => dispatch(userDelete(user)),
     userDeleteRequest: user => dispatch(userDeleteRequest(user)),
     userRoleChange: user => dispatch(userRoleChange(user)),
