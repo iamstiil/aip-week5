@@ -60,7 +60,6 @@ const App = ({ currentUser, handleLogout, history, isAdmin, isAuthenticated, rou
                 className="dropdown-menu dropdown-menu-right"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <a className="dropdown-item" href="#settings">Settings</a>
                 <a
                   className="dropdown-item"
                   href="#logout"
