@@ -99,7 +99,7 @@ class Dashboard extends Component {
             <button
               className={
                 classnames('btn', 'btn-primary', 'oi', {
-                  'oi-wrench': !this.state.filterOpen,
+                  'oi-magnifying-glass': !this.state.filterOpen,
                   'oi-x': this.state.filterOpen,
                 })
               }
