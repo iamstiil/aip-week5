@@ -109,8 +109,6 @@ class Dashboard extends Component {
               }
               onClick={this.toggleFilter}
             />
-            <button className="btn btn-primary oi oi-list" />
-            <button className="btn btn-primary oi oi-grid-two-up" />
           </div>
         </div>
         <div className="col-12">
