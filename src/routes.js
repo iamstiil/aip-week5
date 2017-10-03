@@ -6,6 +6,7 @@ import EditTask from './components/EditTask';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import PasswordReset from './components/PasswordReset';
+import PasswordRecovery from './components/PasswordRecovery';
 import Administration from './components/Administration';
 
 
@@ -33,6 +34,11 @@ const routes = [{
       path: '/password-reset',
       exact: true,
       component: PasswordReset,
+    },
+    {
+      path: '/password-recovery',
+      exact: true,
+      component: PasswordRecovery,
     },
     {
       path: '/admin',
