@@ -1,3 +1,16 @@
 .btn-create {
   cursor: pointer;
 }
+
+.filter-input {
+  overflow: hidden;
+
+  input {
+    margin-left: 100%;
+    transition: margin-left 0.3s ease;
+  }
+
+  &.open input {
+    margin-left: 0;
+  }
+}
