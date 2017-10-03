@@ -24,24 +24,9 @@ const App = ({ currentUser, handleLogout, history, isAdmin, isAuthenticated, rou
           </a>
           <ul className="nav nav-pills flex-column sidebar-nav">
             <li className="nav-item">
-              <a href="#dasboard" className="nav-link">
+              <Link className="nav-link" to={'/'}>
                 <em className="oi oi-dashboard" />Dashboard
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="#dasboard" className="nav-link">
-                <em className="oi oi-key" />Rooms
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="#dasboard" className="nav-link">
-                <em className="oi oi-list" />Categories
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="#dasboard" className="nav-link">
-                <em className="oi oi-badge" />Hall of Fame
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
