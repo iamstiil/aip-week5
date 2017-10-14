@@ -21,7 +21,6 @@ class PasswordRecovery extends Component {
       id: isIdValid ? id : null,
       password: '',
       passwordConfirm: '',
-      submitted: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -29,12 +28,20 @@ class PasswordRecovery extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.setState({ errors: {} });
     this.props.passwordRecoveryRequest(
       this.state.id,
       this.state.password,
       this.state.passwordConfirm,
-    ).then((res) => {
-      console.log(res.json());
+    ).then(res => res.json()).then((res) => {
+      if (res.error) {
+        this.setState({ error: { default: res.error } });
+      } else {
+        this.setState({ msg: 'Password recovery was successful. You will be redirected...' });
+        setTimeout(() => {
+          this.props.history.push('/');
+        }, 3000);
+      }
     });
   }
 
@@ -68,8 +75,14 @@ class PasswordRecovery extends Component {
                 required
               />
               <button
-                className="btn btn-primary btn-block"
+                className="btn btn-primary btn-block mb-3"
               >Submit</button>
+              {this.state.error.default && (
+                <div className="alert alert-danger" role="alert">{this.state.error.default}</div>
+              )}
+              {this.state.msg && (
+                <div className="alert alert-success" role="alert">{this.state.msg}</div>
+              )}
             </form>
           </div>
         )}
@@ -108,6 +121,7 @@ class PasswordRecovery extends Component {
 PasswordRecovery.propTypes = {
   passwordRecoveryRequest: PropTypes.func.isRequired,
   location: ReactRouterPropTypes.location.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 export default connect(
