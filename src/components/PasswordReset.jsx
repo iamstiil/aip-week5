@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { passwordResetRequest } from '../actions';
 import InputGroup from './InputGroup';
 
@@ -21,8 +22,16 @@ class PasswordReset extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.passwordResetRequest(this.state.email).then((res) => {
-      console.log(res.json());
+    this.setState({ error: {} });
+    this.props.passwordResetRequest(this.state.email).then(res => res.json()).then((res) => {
+      if (res.error) {
+        this.setState({ error: { default: res.error } });
+      } else {
+        this.setState({ msg: 'Password reset was requested. Email was sent to your mailbox.' });
+        setTimeout(() => {
+          this.props.history.push('/');
+        }, 3000);
+      }
     });
   }
   handleChange(e) {
@@ -45,8 +54,14 @@ class PasswordReset extends Component {
               required
             />
             <button
-              className="btn btn-primary btn-block"
+              className="btn btn-primary btn-block mb-3"
             >Reset</button>
+            {this.state.error.default && (
+              <div className="alert alert-danger" role="alert">{this.state.error.default}</div>
+            )}
+            {this.state.msg && (
+              <div className="alert alert-success" role="alert">{this.state.msg}</div>
+            )}
           </form>
         </div>
       </div>
@@ -59,6 +74,7 @@ class PasswordReset extends Component {
  */
 PasswordReset.propTypes = {
   passwordResetRequest: PropTypes.func.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 export default connect(
