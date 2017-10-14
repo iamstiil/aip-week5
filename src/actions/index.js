@@ -170,6 +170,16 @@ export function passwordResetRequest(email) {
   });
 }
 
+export function passwordRecoveryRequest(id, password, passwordConfirm) {
+  return () => fetch('http://localhost:8080/auth/password-recovery', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id, password, passwordConfirm }),
+  });
+}
+
 export function changeTitle(title) {
   return { type: CHANGE_TITLE, title };
 }

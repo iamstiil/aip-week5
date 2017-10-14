@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { passwordResetRequest } from '../actions';
+import { passwordRecoveryRequest } from '../actions';
 import InputGroup from './InputGroup';
 
 /**
@@ -13,7 +13,7 @@ class PasswordRecovery extends Component {
     super(props);
     let id;
     if (props.location.search) {
-      id = props.location.search.splice(0, 1);
+      id = props.location.search.substring(1);
     }
     const isIdValid = new RegExp('^[a-f0-9]{24}$').test(id);
     this.state = {
@@ -29,10 +29,15 @@ class PasswordRecovery extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.passwordResetRequest(this.state.email).then((res) => {
+    this.props.passwordRecoveryRequest(
+      this.state.id,
+      this.state.password,
+      this.state.passwordConfirm,
+    ).then((res) => {
       console.log(res.json());
     });
   }
+
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -101,14 +106,16 @@ class PasswordRecovery extends Component {
  * PropTypes
  */
 PasswordRecovery.propTypes = {
-  passwordResetRequest: PropTypes.func.isRequired,
+  passwordRecoveryRequest: PropTypes.func.isRequired,
   location: ReactRouterPropTypes.location.isRequired,
 };
 
 export default connect(
   null,
   dispatch => ({
-    passwordResetRequest: email => dispatch(passwordResetRequest(email)),
+    passwordRecoveryRequest: (id, password, passwordConfirm) => dispatch(
+      passwordRecoveryRequest(id, password, passwordConfirm),
+    ),
   }),
 )(PasswordRecovery);
 
