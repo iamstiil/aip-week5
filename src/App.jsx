@@ -25,7 +25,7 @@ const App = ({ currentUser, handleLogout, history, isAdmin, isAuthenticated, rou
           <ul className="nav nav-pills flex-column sidebar-nav">
             <li className="nav-item">
               <Link className="nav-link" to={'/'}>
-                <em className="oi oi-dashboard" />Dashboard
+                <em className="oi oi-dashboard" /> Dashboard
               </Link>
             </li>
           </ul>

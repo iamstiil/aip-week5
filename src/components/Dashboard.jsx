@@ -61,7 +61,7 @@ class Dashboard extends Component {
           );
         })}
         <Link to={`/task/create?${user.id}`}>
-          <button className="btn btn-primary btn-block btn-create">Create Task</button>
+          <button className="btn btn-primary btn-block btn-create mb-3">Create Task</button>
         </Link>
       </div>
     ));
