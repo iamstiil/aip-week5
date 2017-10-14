@@ -163,9 +163,18 @@ function createRecovery(user) {
   return Recovery.create({ user });
 }
 
+function getRecoveryById(id) {
+  return Recovery.findById(id).exec();
+}
+
 function getRecoveryByUser(user) {
   return Recovery.findOne({ user }).exec();
 }
+
+function deleteRecoveryById(id) {
+  return Recovery.findByIdAndRemove(id).exec();
+}
+
 /**
  * Export
  */
@@ -184,5 +193,7 @@ module.exports = {
   updateTask,
   deleteTask,
   createRecovery,
+  getRecoveryById,
   getRecoveryByUser,
+  deleteRecoveryById,
 };

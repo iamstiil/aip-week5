@@ -160,6 +160,50 @@ router.post('/password-reset', (req, res) => {
   });
 });
 
+/*
+ * Handle password recovery
+ */
+router.post('/password-recovery', (req, res) => {
+  const { id, password, passwordConfirm } = req.body;
+  let isValid = new RegExp('^[a-f0-9]{24}$').test(id);
+  if (password !== passwordConfirm) {
+    isValid = false;
+  }
+  if (isValid) {
+    db.getRecoveryById(id).then((recovery) => {
+      if (recovery !== null) {
+        db.getUserById(recovery.user).then((user) => {
+          if (user !== null) {
+            // Hash password
+            bcrypt.hash(password, 10, (err, hash) => {
+              // Create user
+              db.updateUserById({
+                _id: user._id
+              }, {
+                password_digest: hash
+              }).then((response) => {
+                if (response !== null) {
+                  db.deleteRecoveryById(id);
+                  res.json({ success: true });
+                } else {
+                  res.status(400).json({ error: 'Unexpected error while recovering. Try again.' });
+                }
+              });
+            });
+          } else {
+            db.deleteRecoveryById(id);
+            res.status(410).json({ error: 'User has been removed' });
+          }
+        });
+      } else {
+        res.status(400).json({ error: 'Password reset was not requested.' });
+      }
+    });
+  } else {
+    res.status(400).json({ error: 'Invalid ID was provided.' });
+  }
+});
+
 /**
  * Export
  */
