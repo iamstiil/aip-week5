@@ -164,9 +164,9 @@ router.post('/password-reset', (req, res) => {
  * Handle password recovery
  */
 router.post('/password-recovery', (req, res) => {
-  const { id, password, passwordConfirm } = req.body;
+  const { id, password, confirmPassword } = req.body;
   let isValid = new RegExp('^[a-f0-9]{24}$').test(id);
-  if (password !== passwordConfirm) {
+  if (password !== confirmPassword) {
     isValid = false;
   }
   if (isValid) {

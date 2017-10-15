@@ -1,20 +1,8 @@
 const Validator = require('validator');
 
-function validateSignupInput(data) {
+function validatePassword(data) {
   const errors = {};
-  const { confirmPassword, email, password, username } = data;
-
-  if (!Validator.isEmail(email)) {
-    errors.email = 'Email is not valid';
-  }
-
-  if (Validator.isEmpty(email)) {
-    errors.email = 'Email is required';
-  }
-
-  if (Validator.isEmpty(username)) {
-    errors.username = 'Username is required';
-  }
+  const { password, confirmPassword } = data;
 
   if (!Validator.matches(password, /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&()#])[A-Za-z\d$@$!%*?&()#]{8,}/)) {
     errors.password = 'Password needs to have upper and lowercase letters, numbers, special characters and a length of 8';
@@ -30,6 +18,29 @@ function validateSignupInput(data) {
 
   if (Validator.isEmpty(confirmPassword)) {
     errors.confirmPassword = 'Password need to be confirmed';
+  }
+
+  return {
+    errors,
+    isValid: !Object.keys(errors).length,
+  };
+}
+
+function validateSignupInput(data) {
+  const passwordValidation = validatePassword(data);
+  const errors = passwordValidation.errors;
+  const { email, username } = data;
+
+  if (!Validator.isEmail(email)) {
+    errors.email = 'Email is not valid';
+  }
+
+  if (Validator.isEmpty(email)) {
+    errors.email = 'Email is required';
+  }
+
+  if (Validator.isEmpty(username)) {
+    errors.username = 'Username is required';
   }
 
   return {
@@ -61,6 +72,7 @@ function validateTaskCreation(task) {
 }
 
 module.exports = {
+  validatePassword,
   validateSignupInput,
   validateTaskCreation,
 };

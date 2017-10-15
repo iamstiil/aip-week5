@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { passwordRecoveryRequest } from '../actions';
 import InputGroup from './InputGroup';
+import validations from '../shared/validations';
 
 /**
  * Component for setting new password
@@ -17,36 +18,52 @@ class PasswordRecovery extends Component {
     }
     const isIdValid = new RegExp('^[a-f0-9]{24}$').test(id);
     this.state = {
-      error: {},
+      errors: {},
       id: isIdValid ? id : null,
       password: '',
-      passwordConfirm: '',
+      confirmPassword: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.isValid = this.isValid.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ errors: {} });
-    this.props.passwordRecoveryRequest(
-      this.state.id,
-      this.state.password,
-      this.state.passwordConfirm,
-    ).then(res => res.json()).then((res) => {
-      if (res.error) {
-        this.setState({ error: { default: res.error } });
-      } else {
-        this.setState({ msg: 'Password recovery was successful. You will be redirected...' });
-        setTimeout(() => {
-          this.props.history.push('/');
-        }, 3000);
-      }
-    });
+    const userData = {
+      id: this.state.id,
+      password: this.state.password,
+      confirmPassword: this.state.confirmPassword,
+    };
+    if (this.isValid(userData)) {
+      this.props.passwordRecoveryRequest(userData).then(res => res.json()).then((res) => {
+        if (res.error) {
+          this.setState({ errors: { default: res.error } });
+        } else {
+          this.setState({ msg: 'Password recovery was successful. You will be redirected...' });
+          setTimeout(() => {
+            this.props.history.push('/');
+          }, 3000);
+        }
+      });
+    }
   }
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  /**
+   * Check if form fields are valid
+   */
+  isValid(userData) {
+    const { errors, isValid } = validations.validatePassword(userData);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
   }
 
   render() {
@@ -59,6 +76,7 @@ class PasswordRecovery extends Component {
             <form className="form" onSubmit={this.handleSubmit}>
               <input type="text" name="id" value={this.state.id} hidden />
               <InputGroup
+                error={this.state.errors.password}
                 field="password"
                 label="New Password"
                 onChange={this.handleChange}
@@ -67,18 +85,19 @@ class PasswordRecovery extends Component {
                 required
               />
               <InputGroup
-                field="passwordConfirm"
+                error={this.state.errors.confirmPassword}
+                field="confirmPassword"
                 label="Confirm new Password"
                 onChange={this.handleChange}
                 type="password"
-                value={this.state.passwordConfirm}
+                value={this.state.confirmPassword}
                 required
               />
               <button
                 className="btn btn-primary btn-block mb-3"
               >Submit</button>
-              {this.state.error.default && (
-                <div className="alert alert-danger" role="alert">{this.state.error.default}</div>
+              {this.state.errors.default && (
+                <div className="alert alert-danger" role="alert">{this.state.errors.default}</div>
               )}
               {this.state.msg && (
                 <div className="alert alert-success" role="alert">{this.state.msg}</div>
@@ -127,8 +146,8 @@ PasswordRecovery.propTypes = {
 export default connect(
   null,
   dispatch => ({
-    passwordRecoveryRequest: (id, password, passwordConfirm) => dispatch(
-      passwordRecoveryRequest(id, password, passwordConfirm),
+    passwordRecoveryRequest: data => dispatch(
+      passwordRecoveryRequest(data),
     ),
   }),
 )(PasswordRecovery);
