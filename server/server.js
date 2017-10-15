@@ -2,6 +2,7 @@
  * Import dependencies
  */
 const express = require('express');
+const path = require('path');
 const apiRouter = require('./api-router');
 const authRouter = require('./auth-router');
 const constants = require('../src/constants');
@@ -27,6 +28,9 @@ app.use('/auth', authRouter);
 app.use('/api', apiRouter);
 // Add built react frontend
 app.use(express.static('build'));
+app.use('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/../build/index.html');
+});
 
 // Serve
 app.listen(constants.appPort, () => {
