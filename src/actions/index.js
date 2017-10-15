@@ -14,13 +14,16 @@ import {
   USER_DELETE,
   CHANGE_TITLE,
 } from './actionTypes';
+import { appPort, appUrl } from '../../src/constants';
+
+const url = `http://${appUrl}:${appPort}`;
 
 /**
  * Helper Functions
  */
 function fetchUsers() {
   const token = localStorage.getItem('jwtToken');
-  return fetch('http://localhost:8080/api/user', {
+  return fetch(`${url}/api/user`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -30,7 +33,7 @@ function fetchUsers() {
 
 function fetchTasks() {
   const token = localStorage.getItem('jwtToken');
-  return fetch('http://localhost:8080/api/task', {
+  return fetch(`${url}/api/task`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -61,7 +64,7 @@ export function initializeApp() {
 
 export function userSignupRequest(userData) {
   // TODO: Refactor into reducer users
-  return () => fetch('http://localhost:8080/auth/signup', {
+  return () => fetch(`${url}/auth/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -72,7 +75,7 @@ export function userSignupRequest(userData) {
 
 export function createTaskRequest(task) {
   const token = localStorage.getItem('jwtToken');
-  return () => fetch('http://localhost:8080/api/task', {
+  return () => fetch(`${url}/api/task`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -103,7 +106,7 @@ export function editTask(task) {
 
 export function editTaskRequest(task) {
   const token = localStorage.getItem('jwtToken');
-  return () => fetch(`http://localhost:8080/api/task/${task.id}`, {
+  return () => fetch(`${url}/api/task/${task.id}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -119,7 +122,7 @@ export function deleteTask(task) {
 
 export function deleteTaskRequest(task) {
   const token = localStorage.getItem('jwtToken');
-  return () => fetch(`http://localhost:8080/api/task/${task.id}`, {
+  return () => fetch(`${url}/api/task/${task.id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -130,7 +133,7 @@ export function deleteTaskRequest(task) {
 
 export function userRoleChangeRequest(user) {
   const token = localStorage.getItem('jwtToken');
-  return () => fetch(`http://localhost:8080/api/user/${user.id}`, {
+  return () => fetch(`${url}/api/user/${user.id}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -146,7 +149,7 @@ export function userRoleChange(user) {
 
 export function userDeleteRequest(user) {
   const token = localStorage.getItem('jwtToken');
-  return () => fetch(`http://localhost:8080/api/user/${user.id}`, {
+  return () => fetch(`${url}/api/user/${user.id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -161,7 +164,7 @@ export function userDelete(user) {
 }
 
 export function passwordResetRequest(email) {
-  return () => fetch('http://localhost:8080/auth/password-reset', {
+  return () => fetch(`${url}/auth/password-reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -170,13 +173,13 @@ export function passwordResetRequest(email) {
   });
 }
 
-export function passwordRecoveryRequest(id, password, passwordConfirm) {
-  return () => fetch('http://localhost:8080/auth/password-recovery', {
+export function passwordRecoveryRequest(data) {
+  return () => fetch(`${url}/auth/password-recovery`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ id, password, passwordConfirm }),
+    body: JSON.stringify(data),
   });
 }
 

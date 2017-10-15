@@ -4,6 +4,7 @@
 const express = require('express');
 const bearerToken = require('express-bearer-token');
 const jwt = require('jsonwebtoken');
+const constants = require('../../src/constants');
 const taskRouter = require('./task');
 const userRouter = require('./user');
 
@@ -20,7 +21,7 @@ router.use(bearerToken());
  */
 router.use((req, res, next) => {
   if (req.token) {
-    jwt.verify(req.token, 'secretsecretsecretsecret', (err, decoded) => {
+    jwt.verify(req.token, constants.passwordSecret, (err, decoded) => {
       if (err) {
         res.status(400).json({ errors: { default: 'Invalid token' } });
       } else {

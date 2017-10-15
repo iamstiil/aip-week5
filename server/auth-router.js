@@ -6,24 +6,12 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-const SmtpServer = require('smtp-server').SMTPServer;
+const constants = require('../src/constants');
 const db = require('./db');
 const validations = require('../src/shared/validations');
 
 // Create authentication router
 const router = express.Router();
-
-// Create SMTP server
-const smtp = new SmtpServer({
-  onAuth(auth, session, callback) {
-    console.log(auth, session);
-    if (auth.username !== 'admin' || auth.password !== 'adminadmin') {
-      return callback(new Error('Invalid username or password'));
-    }
-    return callback(null, { user: 'admin' });
-  },
-});
-smtp.listen(25);
 
 // Parse request body stream as json
 router.use(bodyParser.json());
@@ -50,14 +38,13 @@ router.post('/login', (req, res) => {
     // Check submitted password with saved hash
     bcrypt.compare(password, response.password_digest, (err, isValid) => {
       if (isValid) {
-        // TODO: Refactor secret into seperate config file
         const token = jwt.sign({
           email: response.email,
           id: response._id,
           name: response.name,
           role: response.role,
           username: response.username,
-        }, 'secretsecretsecretsecret');
+        }, constants.passwordSecret);
         res.json({ token });
       } else {
         res.status(400).json({ error: { password: 'Password is not valid' } });
@@ -112,19 +99,13 @@ router.post('/signup', (req, res) => {
 });
 
 function sendResetMail(email, res, id) {
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'homizemailservice@gmail.com',
-      pass: 'aip_homize17',
-    },
-  });
+  const transporter = nodemailer.createTransport(constants.nodemailerSettings);
   transporter.sendMail({
     from: 'password-reset@homize.com',
     to: email,
     subject: '[Homize] Password Reset',
-    text: `Please visit the following link to reset your password: http://localhost:3000/password-recovery/${id}`,
-    html: `Please visit the following link to reset your password: <a href="http://localhost:3000/password-recovery/${id}">http://localhost:3000/password-recovery/${id}</a>`,
+    text: `Please visit the following link to reset your password: http://${constants.appUrl}/password-recovery/${id}`,
+    html: `Please visit the following link to reset your password: <a href="http://${constants.appUrl}/password-recovery/${id}">http://${constants.appUrl}/password-recovery/${id}</a>`,
   }, (error) => {
     if (error) {
       res.status(400).json({ error: 'error while sending Email' });
@@ -164,9 +145,9 @@ router.post('/password-reset', (req, res) => {
  * Handle password recovery
  */
 router.post('/password-recovery', (req, res) => {
-  const { id, password, passwordConfirm } = req.body;
+  const { id, password, confirmPassword } = req.body;
   let isValid = new RegExp('^[a-f0-9]{24}$').test(id);
-  if (password !== passwordConfirm) {
+  if (password !== confirmPassword) {
     isValid = false;
   }
   if (isValid) {

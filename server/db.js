@@ -2,6 +2,7 @@
  * Import dependencies
  */
 const mongoose = require('mongoose');
+const constants = require('../src/constants');
 const Recovery = require('./models/Recovery');
 const Task = require('./models/Task');
 const User = require('./models/User');
@@ -9,7 +10,7 @@ const User = require('./models/User');
 /**
  * Connect to MongoDB
  */
-mongoose.connect('mongodb://localhost:27017/test', { useMongoClient: true });
+mongoose.connect(constants.mongodb, { useMongoClient: true });
 
 /**
  * Create new user
