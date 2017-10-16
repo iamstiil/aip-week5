@@ -104,8 +104,8 @@ function sendResetMail(email, res, id) {
     from: 'password-reset@homize.com',
     to: email,
     subject: '[Homize] Password Reset',
-    text: `Please visit the following link to reset your password: http://${constants.appUrl}/password-recovery/${id}`,
-    html: `Please visit the following link to reset your password: <a href="http://${constants.appUrl}/password-recovery/${id}">http://${constants.appUrl}/password-recovery/${id}</a>`,
+    text: `Please visit the following link to reset your password: http://${constants.appUrl}/password-recovery?${id}`,
+    html: `Please visit the following link to reset your password: <a href="http://${constants.appUrl}/password-recovery?${id}">http://${constants.appUrl}/password-recovery?${id}</a>`,
   }, (error) => {
     if (error) {
       res.status(400).json({ error: 'error while sending Email' });
