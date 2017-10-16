@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { userLoggedIn } from '../actions';
+import { appUrl } from '../constants';
 import InputGroup from './InputGroup';
 import './Login.scss';
 
@@ -39,7 +40,7 @@ class Login extends Component {
     this.setState({
       error: {},
     });
-    fetch('http://localhost:8080/auth/login', {
+    fetch(`http://${appUrl}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
