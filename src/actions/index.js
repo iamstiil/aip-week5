@@ -199,7 +199,7 @@ export function updateUserRequest(userid, user) {
 }
 
 export function loginRequest(data) {
-  return fetch(`${url}/auth/login`, {
+  return () => fetch(`${url}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
