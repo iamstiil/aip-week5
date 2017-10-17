@@ -39,26 +39,18 @@ class Login extends Component {
   handleClick() {
     this.setState({
       error: {},
+      submitted: true,
     });
     this.props.loginRequest(this.state.formData).then(response => response.json()).then((body) => {
       if (body.error) {
         this.setState({
           error: body.error,
+          submitted: false,
         });
       } else {
         this.props.userLoggedIn(body.token);
         this.props.history.push('/');
       }
-    });
-  }
-
-  /**
-   * Handle form submit
-   * TODO: Refactor
-   */
-  handleSubmit() {
-    this.setState({ submitted: true }, () => {
-      setTimeout(() => this.setState({ submitted: false }), 5000);
     });
   }
 
