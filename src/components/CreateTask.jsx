@@ -59,6 +59,7 @@ class CreateTask extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.isValid = this.isValid.bind(this);
   }
 
@@ -90,6 +91,30 @@ class CreateTask extends Component {
         [event.target.name]: event.target.value,
       },
     });
+  }
+
+  /**
+   * Handle form submission
+   */
+  handleSubmit() {
+    if (this.isValid(this.state.task)) {
+      this.setState({
+        isLoading: true,
+      });
+      this.props.onCreateTaskRequest(this.state.task).then((res) => {
+        if (res.status === 200) {
+          res.json().then((task) => {
+            this.props.onCreateTask(task);
+            this.props.history.push('/');
+          });
+        } else if (res.status === 400) {
+          this.setState({
+            errors: 'Task could not be created! Please try again.',
+            isLoading: false,
+          });
+        }
+      });
+    }
   }
 
   /**
@@ -144,26 +169,7 @@ class CreateTask extends Component {
           <button
             className="btn btn-primary btn-submit"
             disabled={this.state.isLoading}
-            onClick={() => {
-              if (this.isValid(this.state.task)) {
-                this.setState({
-                  isLoading: true,
-                });
-                this.props.onCreateTaskRequest(this.state.task).then((res) => {
-                  if (res.status === 200) {
-                    res.json().then((task) => {
-                      this.props.onCreateTask(task);
-                      this.props.history.push('/');
-                    });
-                  } else if (res.status === 400) {
-                    this.setState({
-                      errors: 'Task could not be created! Please try again.',
-                      isLoading: false,
-                    });
-                  }
-                });
-              }
-            }}
+            onClick={this.handleSubmit}
           >Create</button>
           <button
             className="btn btn-secondary btn-cancel"
