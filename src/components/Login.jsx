@@ -9,7 +9,6 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { userLoggedIn } from '../actions';
 import { appUrl } from '../constants';
 import InputGroup from './InputGroup';
-import './Login.scss';
 import logo from '../homize_logo.png';
 
 /**
@@ -80,7 +79,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="login-panel card mt-5 logo">
+      <div className="login-panel card mt-5">
         <img src={logo} alt="logo" />
         <div className="card-block p-3">
           <h3 className="card-title text-center mt-1">Login</h3>
