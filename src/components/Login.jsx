@@ -10,6 +10,7 @@ import { userLoggedIn } from '../actions';
 import { appUrl } from '../constants';
 import InputGroup from './InputGroup';
 import './Login.scss';
+import logo from '../homize_logo.png';
 
 /**
  * Component class for Login
@@ -79,7 +80,8 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="login-panel card mt-5">
+      <div className="login-panel card mt-5 logo">
+        <img src={logo} alt="logo" />
         <div className="card-block p-3">
           <h3 className="card-title text-center mt-1">Login</h3>
           <div className="divider mt-0" />
