@@ -12,7 +12,11 @@ const app = express();
 
 // Add middleware to allow CORS
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', `http://localhost:3000, http://${constants.appUrl}`);
+  const allowedOrigins = ['http://localhost:3000', `http://${constants.appUrl}`];
+  const origin = req.headers.origin;
+  if (allowedOrigins.indexOf(origin) > -1) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
   res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type, Accept');
   if (req.method === 'OPTIONS') {
