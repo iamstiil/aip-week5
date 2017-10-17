@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { loginRequest, userLoggedIn } from '../actions';
-import { appUrl } from '../constants';
 import InputGroup from './InputGroup';
 import logo from '../homize_logo.png';
 
