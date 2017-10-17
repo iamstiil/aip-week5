@@ -1,13 +1,14 @@
 import App from './App';
 import Dashboard from './components/Dashboard';
-import Task from './components/Task';
-import CreateTask from './components/CreateTask';
-import EditTask from './components/EditTask';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import PasswordReset from './components/PasswordReset';
 import PasswordRecovery from './components/PasswordRecovery';
 import Administration from './components/Administration';
+import Settings from './components/Settings';
+import CreateTask from './components/CreateTask';
+import Task from './components/Task';
+import EditTask from './components/EditTask';
 
 
 import requireAuth from './utils/requireAuth';
@@ -44,6 +45,11 @@ const routes = [{
       path: '/admin',
       exact: true,
       component: requireAuth(Administration),
+    },
+    {
+      path: '/settings',
+      exact: true,
+      component: requireAuth(Settings),
     },
     {
       path: '/task/create',

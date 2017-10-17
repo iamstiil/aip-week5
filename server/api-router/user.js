@@ -24,6 +24,7 @@ router.get('/', (req, res) => {
         id: user._id,
         email: user.email,
         name: user.name,
+        phone: user.phone,
         role: user.role,
         username: user.username,
       });
@@ -53,6 +54,7 @@ router.put('/:id', (req, res) => {
       email: response.email,
       id: response._id,
       name: response.name,
+      phone: response.phone,
       role: response.role,
       username: response.username,
     });
@@ -69,6 +71,7 @@ router.delete('/:id', (req, res) => {
         email: response.email,
         id: response._id,
         name: response.name,
+        phone: response.phone,
         role: response.role,
         username: response.username,
       });

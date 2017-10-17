@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema({
   email: String,
   name: String,
   password_digest: String,
+  phone: String,
   role: {
     enum: ROLES,
     type: String,

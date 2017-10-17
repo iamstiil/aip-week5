@@ -71,8 +71,27 @@ function validateTaskCreation(task) {
   };
 }
 
+function validateUser(user) {
+  const errors = {};
+  const { phone, role } = user;
+
+  if (phone && !Validator.isEmpty(phone) && !Validator.isMobilePhone(phone, 'any')) {
+    errors.phone = 'Phone number is not valid';
+  }
+
+  if (role && !Validator.isEmpty(role) && !Validator.isIn(['User', 'Administrator'])) {
+    errors.role = 'Role is not valid';
+  }
+
+  return {
+    errors,
+    isValid: !Object.keys(errors).length,
+  };
+}
+
 module.exports = {
   validatePassword,
   validateSignupInput,
   validateTaskCreation,
+  validateUser,
 };

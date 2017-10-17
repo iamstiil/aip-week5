@@ -186,3 +186,15 @@ export function passwordRecoveryRequest(data) {
 export function changeTitle(title) {
   return { type: CHANGE_TITLE, title };
 }
+
+export function updateUserRequest(userid, user) {
+  const token = localStorage.getItem('jwtToken');
+  return () => fetch(`${url}/api/user/${userid}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  });
+}

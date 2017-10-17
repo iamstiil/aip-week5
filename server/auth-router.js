@@ -42,6 +42,7 @@ router.post('/login', (req, res) => {
           email: response.email,
           id: response._id,
           name: response.name,
+          phone: response.phone,
           role: response.role,
           username: response.username,
         }, constants.passwordSecret);
