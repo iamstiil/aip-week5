@@ -1,3 +1,6 @@
+/**
+ * Import dependencies
+ */
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -6,7 +9,13 @@ import InputGroup from './InputGroup';
 import CustomPropTypes from '../utils/custom-prop-types';
 import { validateUser } from '../shared/validations';
 
+/**
+ * Component for settings view
+ */
 class Settings extends Component {
+  /**
+   * Constructor
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -26,10 +35,16 @@ class Settings extends Component {
     this.props.changeTitle('Settings');
   }
 
+  /**
+   * Hangle input change
+   */
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  /**
+   * Handle form submission
+   */
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ errors: {} });
@@ -49,6 +64,9 @@ class Settings extends Component {
     }
   }
 
+  /**
+   * Check form validity
+   */
   isValid(user) {
     const { errors, isValid } = validateUser(user);
     if (!isValid) {
@@ -92,12 +110,18 @@ class Settings extends Component {
   }
 }
 
+/**
+ * PropTypes
+ */
 Settings.propTypes = {
   changeTitle: PropTypes.func.isRequired,
   currentUser: CustomPropTypes.user.isRequired,
   updateUserRequest: PropTypes.func.isRequired,
 };
 
+/**
+ * Connect Redux with Component
+ */
 export default connect(
   state => ({
     currentUser: state.app.currentUser,

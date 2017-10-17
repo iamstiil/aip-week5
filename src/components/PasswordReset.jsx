@@ -9,6 +9,9 @@ import InputGroup from './InputGroup';
  * Component for resetting the Password
  */
 class PasswordReset extends Component {
+  /**
+   * Constructor
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +23,9 @@ class PasswordReset extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  /**
+   * Handle form submission
+   */
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ error: {} });
@@ -34,6 +40,10 @@ class PasswordReset extends Component {
       }
     });
   }
+
+  /**
+   * Handle input change
+   */
   handleChange(e) {
     this.setState({ email: e.target.value });
   }
@@ -77,6 +87,9 @@ PasswordReset.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
 };
 
+/**
+ * Connect Redux with Component
+ */
 export default connect(
   null,
   dispatch => ({
