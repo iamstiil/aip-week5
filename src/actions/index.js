@@ -63,7 +63,6 @@ export function initializeApp() {
 }
 
 export function userSignupRequest(userData) {
-  // TODO: Refactor into reducer users
   return () => fetch(`${url}/auth/signup`, {
     method: 'POST',
     headers: {
@@ -196,5 +195,15 @@ export function updateUserRequest(userid, user) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(user),
+  });
+}
+
+export function loginRequest(data) {
+  return fetch(`${url}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
   });
 }

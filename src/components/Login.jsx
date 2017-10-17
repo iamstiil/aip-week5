@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { userLoggedIn } from '../actions';
+import { loginRequest, userLoggedIn } from '../actions';
 import { appUrl } from '../constants';
 import InputGroup from './InputGroup';
 import './Login.scss';
@@ -35,19 +35,12 @@ class Login extends Component {
 
   /**
    * Handle submit button click
-   * TODO: Refactor
    */
   handleClick() {
     this.setState({
       error: {},
     });
-    fetch(`http://${appUrl}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(this.state),
-    }).then(response => response.json()).then((body) => {
+    this.props.loginRequest(this.state.formData).then(response => response.json()).then((body) => {
       if (body.error) {
         this.setState({
           error: body.error,
@@ -130,6 +123,7 @@ class Login extends Component {
  */
 Login.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
+  loginRequest: PropTypes.func.isRequired,
   userLoggedIn: PropTypes.func.isRequired,
 };
 
@@ -139,8 +133,7 @@ Login.propTypes = {
 export default connect(
   null,
   dispatch => ({
-    userLoggedIn: (token) => {
-      dispatch(userLoggedIn(token));
-    },
+    loginRequest: data => dispatch(loginRequest(data)),
+    userLoggedIn: token => dispatch(userLoggedIn(token)),
   }),
 )(Login);

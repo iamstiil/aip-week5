@@ -21,7 +21,7 @@ router.use(bodyParser.json());
  */
 router.post('/login', (req, res) => {
   // Extract email and password from body
-  const { email, password } = req.body.formData;
+  const { email, password } = req.body;
 
   // If variables are empty, there was no input submitted
   if (!email) {
