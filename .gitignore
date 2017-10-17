@@ -68,3 +68,6 @@ yarn-error.log*
 
 # webstorm
 .idea/
+
+# constants
+src/constants.js
