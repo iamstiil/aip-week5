@@ -45,12 +45,6 @@ const App = ({ currentUser, handleLogout, history, isAdmin, isAuthenticated, rou
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <img
-                  className="circle float-left profile-photo"
-                  src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-                  alt="Open Menu"
-                  height={50}
-                />
                 <div className="username mt-1">
                   <h4 className="mb-1">{currentUser.username}</h4>
                   <h6 className="text-muted">{currentUser.role}</h6>
