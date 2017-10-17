@@ -10,6 +10,9 @@ import validations from '../shared/validations';
  * Component for setting new password
  */
 class PasswordRecovery extends Component {
+  /**
+   * Constructor
+   */
   constructor(props) {
     super(props);
     let id;
@@ -28,6 +31,9 @@ class PasswordRecovery extends Component {
     this.isValid = this.isValid.bind(this);
   }
 
+  /**
+   * Handle form submission
+   */
   handleSubmit(e) {
     e.preventDefault();
     this.setState({ errors: {} });
@@ -50,6 +56,9 @@ class PasswordRecovery extends Component {
     }
   }
 
+  /**
+   * Handle input change
+   */
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -143,6 +152,9 @@ PasswordRecovery.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
 };
 
+/**
+ * Connect Redux with Component
+ */
 export default connect(
   null,
   dispatch => ({
