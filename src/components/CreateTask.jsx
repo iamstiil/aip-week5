@@ -58,9 +58,7 @@ class CreateTask extends Component {
       },
     };
 
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.handleUserChange = this.handleUserChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.isValid = this.isValid.bind(this);
   }
 
@@ -82,39 +80,14 @@ class CreateTask extends Component {
     });
   }
 
-  // TODO: Join change handlers to one like EditTask
   /**
-   * Handle title change in form
+   * Handle change in form
    */
-  handleTitleChange(event) {
+  handleChange(event) {
     this.setState({
       task: {
         ...this.state.task,
-        title: event.target.value,
-      },
-    });
-  }
-
-  /**
-   * Handle description change in form
-   */
-  handleDescriptionChange(event) {
-    this.setState({
-      task: {
-        ...this.state.task,
-        description: event.target.value,
-      },
-    });
-  }
-
-  /**
-   * Handle user change in form
-   */
-  handleUserChange(event) {
-    this.setState({
-      task: {
-        ...this.state.task,
-        user: event.target.value,
+        [event.target.name]: event.target.value,
       },
     });
   }
@@ -142,24 +115,24 @@ class CreateTask extends Component {
         <div className="col-12">
           <InputGroup
             error={this.state.errors.title}
-            field="task-title"
+            field="title"
             label="Title"
-            onChange={this.handleTitleChange}
+            onChange={this.handleChange}
             type="text"
             value={this.state.task.title}
           />
           <TextAreaGroup
-            field="task-description"
+            field="description"
             label="Description"
-            onChange={this.handleDescriptionChange}
+            onChange={this.handleChange}
             rows={8}
             value={this.state.task.description}
           />
           <SelectGroup
             error={this.state.errors.user}
-            field="task-user"
+            field="user"
             label="User"
-            onChange={this.handleUserChange}
+            onChange={this.handleChange}
             value={this.state.task.user}
           >
             {this.props.users.map(user => (
