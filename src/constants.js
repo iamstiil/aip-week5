@@ -10,4 +10,7 @@ module.exports = {
     },
   },
   passwordSecret: 'secretsecretsecretsecret',
+  twilioAccountSid: 'ACa28c3a3651fb2fa0da2cabc0ba203cc4',
+  twilioAuthToken: 'd38b158510e411c1136f6a97cc07f926',
+  twilioPhone: '+61451562656',
 };

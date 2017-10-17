@@ -4,6 +4,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const db = require('../db');
+const sendMessage = require('../twilio');
 
 // Initialize user router
 const router = express.Router();
@@ -46,6 +47,8 @@ router.post('/', (req, res) => {
     if (!task) {
       res.status(400).json({ errors: { default: 'The server had problems creating your task. Pleast try again.' } });
     }
+
+    sendMessage(user, `You got a new Task: ${title}`);
 
     res.json({
       description: task.description,
